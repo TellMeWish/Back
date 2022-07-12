@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://sowon.cgtqmxutvdoj.ap-northeast-2.rds.amazonaws.com:3306/sowon?serverTimezone=Asia/Seoul
-    username: #
-    password: #
+    username: doyeon
+    password: doyeon1234
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: true
