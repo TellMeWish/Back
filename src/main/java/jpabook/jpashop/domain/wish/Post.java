@@ -1,7 +1,5 @@
 package jpabook.jpashop.domain.wish;
 
-import jpabook.jpashop.domain.Address;
-import jpabook.jpashop.domain.Category;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -63,8 +61,8 @@ public class Post {
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @OneToMany(mappedBy="post", cascade=CascadeType.ALL)
-    private List<Category.Comment> comments = new ArrayList<>();
+//    @OneToMany(mappedBy="post", cascade=CascadeType.ALL)
+//    private List<Category.Comment> comments = new ArrayList<>();
 
     @OneToMany
     private List<File> files = new ArrayList<>();
