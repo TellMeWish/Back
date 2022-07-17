@@ -1,8 +1,14 @@
 package jpabook.jpashop.domain;
 
+import jpabook.jpashop.domain.wish.Post;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Embeddable
 @Getter
@@ -20,4 +26,6 @@ public class Address {
         this.street = street;
         this.zipcode = zipcode;
     }
+
+
 }

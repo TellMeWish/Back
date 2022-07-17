@@ -1,6 +1,7 @@
 package jpabook.jpashop.domain;
 
 import jpabook.jpashop.domain.item.Item;
+import jpabook.jpashop.domain.wish.Post;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,4 +40,31 @@ public class Category {
         child.setParent(this);
     }
 
+    @Entity
+    @Getter @Setter
+    public static class Comment {
+
+        @Id @GeneratedValue
+        @Column(name="comment_id")
+        private Long id;
+
+        @ManyToOne(fetch=LAZY)
+        @JoinColumn(name="post_id")
+        private Post post;
+
+        @ManyToOne(fetch = LAZY)
+        @JoinColumn(name = "parent_id")
+        private Comment parent;
+
+        @OneToMany(mappedBy = "parent")
+        private List<Comment> child = new ArrayList<>();
+
+        @ManyToOne(fetch = LAZY)
+        @JoinColumn(name="user_id")
+        private Address.User user;
+
+        @Column(columnDefinition = "TEXT", nullable = false)
+        private String content;
+
+    }
 }
