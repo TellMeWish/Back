@@ -12,7 +12,13 @@ spring:
     show-sql: true
     properties:
       hibernate.format_sql: true
+server:
+  port: 8081
 
 logging.level:
   org.hibernate.SQL: debug
 #  org.hibernate.type: trace
+
+handlebars:
+  suffix: .html
+  expose-session-attributes: true
