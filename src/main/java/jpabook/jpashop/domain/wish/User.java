@@ -1,9 +1,9 @@
 package jpabook.jpashop.domain.wish;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private String id;
+    private Long id;
 
     //로그인하는 아이디
     @Column(nullable = false)
@@ -37,7 +37,8 @@ public class User {
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "post_user_id", fetch=FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "post_user_id")
     private List<Post> posts = new ArrayList<>();
 
 }

@@ -55,7 +55,7 @@ public class Post {
     private LocalDateTime updatedAt; // 자동화 추가하기
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable=false)
+    @JoinColumn(name = "id")
     private User post_user_id;
 
     @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)

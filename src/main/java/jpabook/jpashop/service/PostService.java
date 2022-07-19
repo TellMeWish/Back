@@ -41,9 +41,18 @@ public class PostService {
     }
 
 
-    public Page<Post> getPostList(Post post) {
+    /*public Page<Post> getPostList(Post post) {
         Pageable pageable = PageRequest.of(0,10, Sort.Direction.DESC, "seq");
         return postRepo.getPostList(pageable);
+    }*/
+
+/*    public Page<Post> getPostList(Pageable pageable){
+        Page<Post> page = postRepo.findAll(pageable);
+        return page;
+    }*/
+    public Page<Post> findAllPage(Pageable pageable){
+        return postRepo.findAll(pageable);
     }
+
 
 }

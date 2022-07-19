@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Override
+   /* @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf()
@@ -20,6 +20,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest()
                 .authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/doLogin")
+                .usernameParameter("id")
+                .passwordParameter("pw")
+                .successHandler(new MyLoginSuccessHandler())
+                .and()
+                .logout()
+                .logoutUrl("/doLogout")
+                .logoutSuccessUrl("/login");
+    }*/
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf()
+                .disable()
+                .authorizeRequests()
+                .anyRequest()
+                .permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")

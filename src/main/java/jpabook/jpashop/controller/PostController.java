@@ -2,20 +2,26 @@ package jpabook.jpashop.controller;
 
 import jpabook.jpashop.domain.wish.Post;
 import jpabook.jpashop.service.PostService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/post")
+@RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
+/*
 
     @Autowired // Constructor 를 통한 Di
     public PostController(PostService postService) {
         this.postService = postService;
     }
+*/
 
 
     @PostMapping("/create")
@@ -39,4 +45,12 @@ public class PostController {
     public void delete(@PathVariable Long id) {
         postService.deletePost(id);
     }
+
+  /*  @GetMapping("/readAll")
+    public ResponseEntity<Post> read(@RequestParam Pageable pageable) {
+        return ResponseEntity.ok()
+                .body(postService.getPostList(pageable));
+    }
+*/
+
 }
