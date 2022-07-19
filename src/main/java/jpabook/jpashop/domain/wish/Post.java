@@ -3,6 +3,7 @@ package jpabook.jpashop.domain.wish;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -54,7 +55,7 @@ public class Post {
     private LocalDateTime updatedAt; // 자동화 추가하기
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id", nullable=false)
     private User post_user_id;
 
     @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
