@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,13 +22,14 @@ public class PostService {
     }
 
     public Post insertPost(Post post) {
-       return postRepo.save(post);
+        return postRepo.save(post);
     }
 
-    public Post updatePost(Post post) {
-        Post findPost = postRepo.findById(post.getId()).get();
+    public Post updatePost(Post post, Long id) {
+        Post findPost = postRepo.findById(id).get();
 
         findPost.setContent(post.getContent());
+        findPost.setTitle(post.getTitle());
 
         return postRepo.save(findPost);
     }
@@ -45,14 +47,18 @@ public class PostService {
         Pageable pageable = PageRequest.of(0,10, Sort.Direction.DESC, "seq");
         return postRepo.getPostList(pageable);
     }*/
-
-/*    public Page<Post> getPostList(Pageable pageable){
-        Page<Post> page = postRepo.findAll(pageable);
-        return page;
-    }*/
-    public Page<Post> findAllPage(Pageable pageable){
+    public Page<Post> findAllPage(Pageable pageable) {
         return postRepo.findAll(pageable);
     }
 
-
+    // PostService
+  /*  public Page<Post> getPostListPage(Optional<Integer> page, Optional<String> sortBy) {
+        return postRepo.findAll(
+                PageRequest.of(
+                        page.orElse(0),
+                        5,
+                        Sort.Direction.ASC, sortBy.orElse("id")
+                )
+        );
+    }*/
 }

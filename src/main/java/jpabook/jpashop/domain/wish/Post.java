@@ -32,15 +32,17 @@ public class Post {
     private String content;
 
     //공개 비공개
-    @Column(name="is_private", columnDefinition = "TINYINT", length=1, nullable = false)
+    @Column(name="is_private", columnDefinition = "TINYINT")
     private int isPrivate;
 
     //모집 완료
-    @Column(name="is_completed", columnDefinition = "TINYINT", length=1, nullable = false)
+    @Column(name="is_completed", columnDefinition = "TINYINT")
     private int isCompleted;
 
+    // length=1, nullable = false
+
     //참여 미참여
-    @Column(name="is_Participate", columnDefinition = "TINYINT", length=1, nullable = false)
+    @Column(name="is_Participate", columnDefinition = "TINYINT")
     private int isParticipate;
 
     @Column(name="view_count")
