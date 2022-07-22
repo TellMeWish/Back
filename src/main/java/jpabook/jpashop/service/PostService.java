@@ -1,7 +1,14 @@
 package jpabook.jpashop.service;
 
+import jpabook.jpashop.common.exception.SowonException;
+import jpabook.jpashop.common.exception.Status;
 import jpabook.jpashop.domain.wish.Post;
+import jpabook.jpashop.domain.wish.User;
+import jpabook.jpashop.dto.CreatePostDto;
 import jpabook.jpashop.repository.PostRepository;
+import jpabook.jpashop.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,16 +20,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class PostService {
-    private PostRepository postRepo;
+    private final PostRepository postRepo;
+    private final UserRepository userRepo;
+    private final ModelMapper modelMapper;
 
-    @Autowired // Constructor 를 사용한 Autowired
-    public PostService(PostRepository postRepo) {
-        this.postRepo = postRepo;
-    }
-
-    public Post insertPost(Post post) {
-        return postRepo.save(post);
+    public void insertPost(CreatePostDto.Request reqDto) {
+        User user = userRepo.findById(reqDto.getUserId()).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
+        Post post = modelMapper.map(reqDto, Post.class);
+        post.setPost_user_id(user);
+        postRepo.save(post);
     }
 
     public Post updatePost(Post post, Long id) {

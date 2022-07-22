@@ -57,15 +57,15 @@ public class Post {
     private LocalDateTime updatedAt; // 자동화 추가하기
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User post_user_id;
 
     @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id")
     private Location location;
 
-//    @OneToMany(mappedBy="post", cascade=CascadeType.ALL)
-//    private List<Category.Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy="post", cascade = CascadeType.ALL)
+    private List<Comment> commentList = new ArrayList<>();
 
     @OneToMany
     private List<File> files = new ArrayList<>();

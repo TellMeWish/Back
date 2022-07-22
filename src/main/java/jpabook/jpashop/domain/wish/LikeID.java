@@ -1,3 +1,4 @@
+/*
 package jpabook.jpashop.domain.wish;
 
 import lombok.AllArgsConstructor;
@@ -21,3 +22,4 @@ public class LikeID implements Serializable {
     @Column(name="post_id")
     private Long postId;
 }
+*/

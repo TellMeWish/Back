@@ -1,3 +1,4 @@
+/*
 package jpabook.jpashop.domain.wish;
 
 import lombok.Getter;
@@ -16,3 +17,4 @@ public class Like {
     @EmbeddedId
     private LikeID likeID;
 }
+*/

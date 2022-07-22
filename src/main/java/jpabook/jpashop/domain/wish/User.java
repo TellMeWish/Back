@@ -18,7 +18,6 @@ public class User {
     //테이블 아이디
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     //로그인하는 아이디

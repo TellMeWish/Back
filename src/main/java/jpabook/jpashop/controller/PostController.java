@@ -2,6 +2,7 @@ package jpabook.jpashop.controller;
 
 import jpabook.jpashop.domain.wish.Post;
 import jpabook.jpashop.domain.wish.User;
+import jpabook.jpashop.dto.CreatePostDto;
 import jpabook.jpashop.repository.PostRepository;
 import jpabook.jpashop.repository.UserRepository;
 import jpabook.jpashop.service.PostService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,23 +38,13 @@ public class PostController {
 */
 
 
-    @PostMapping("/create")
-    public ResponseEntity<Post> create(@RequestBody Post post) {
-
-        User user1 = new User();
-        user1.setUser_id("testid");
-        user1.setPw("testpw");
-        user1.setNickname("test");
-        user1.setPhone_num("010-1234-1234");
-        userRepository.save(user1);
-
-        post.setPost_user_id(user1);
-
-        return ResponseEntity.ok()
-                .body(postService.insertPost(post));
+    @PostMapping
+    public ResponseEntity<Void> create(@RequestBody CreatePostDto.Request reqDto) {
+        postService.insertPost(reqDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/read/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Post> read(@PathVariable Long id) {
         return ResponseEntity.ok()
                 .body(postService.getPost(id).get());
@@ -72,13 +64,13 @@ public class PostController {
                 .body(postService.updatePost(post, id));
     }*/
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Post> update(@RequestBody Post post, @PathVariable Long id) {
         return ResponseEntity.ok()
                 .body(postService.updatePost(post,id));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         postService.deletePost(id);
     }
