@@ -5,6 +5,7 @@ import jpabook.jpashop.common.exception.Status;
 import jpabook.jpashop.domain.wish.Post;
 import jpabook.jpashop.domain.wish.User;
 import jpabook.jpashop.dto.CreatePostDto;
+import jpabook.jpashop.dto.GetPostDto;
 import jpabook.jpashop.repository.PostRepository;
 import jpabook.jpashop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -46,8 +47,11 @@ public class PostService {
         postRepo.deleteById(id);
     }
 
-    public Optional<Post> getPost(Long id) {
-        return postRepo.findById(id);
+    public GetPostDto.Response getPost(Long id) {
+        Post post =  postRepo.findById(id).orElseThrow(()-> new SowonException(Status.NOT_FOUND));
+        GetPostDto.Post resPost = modelMapper.map(post, GetPostDto.Post.class);
+
+        return GetPostDto.Response.builder().post(resPost).build();
     }
 
 

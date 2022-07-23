@@ -3,6 +3,8 @@ package jpabook.jpashop.domain.wish;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Setter
@@ -16,7 +18,10 @@ public class Comment extends BaseTimeEntity{
     private Long id;
 
     private String content;
-    private Long parentId;
+
+    @ManyToOne(fetch =  FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Comment parent;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
@@ -27,4 +32,7 @@ public class Comment extends BaseTimeEntity{
     private Post post;
 
     private Boolean secret;
+
+    @OneToMany(mappedBy = "parent")
+    private List<Comment> commentList = new ArrayList<>();
 }

@@ -3,6 +3,7 @@ package jpabook.jpashop.controller;
 import jpabook.jpashop.domain.wish.Post;
 import jpabook.jpashop.domain.wish.User;
 import jpabook.jpashop.dto.CreatePostDto;
+import jpabook.jpashop.dto.GetPostDto;
 import jpabook.jpashop.repository.PostRepository;
 import jpabook.jpashop.repository.UserRepository;
 import jpabook.jpashop.service.PostService;
@@ -45,9 +46,8 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Post> read(@PathVariable Long id) {
-        return ResponseEntity.ok()
-                .body(postService.getPost(id).get());
+    public ResponseEntity<GetPostDto.Response> getPost(@PathVariable Long id) {
+        return ResponseEntity.ok().body(postService.getPost(id));
     }
     /*@PutMapping("/update/{id}")
     public ResponseEntity<Post> update(@RequestBody Post post, @PathVariable Long id) {

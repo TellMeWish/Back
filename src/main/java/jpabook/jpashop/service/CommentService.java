@@ -10,8 +10,12 @@ import jpabook.jpashop.repository.CommentRepository;
 import jpabook.jpashop.repository.PostRepository;
 import jpabook.jpashop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Objects;
 
@@ -28,22 +32,25 @@ public class CommentService {
         User user = userRepository.findById(reqDto.getUserId()).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
         Post post = postRepository.findById(reqDto.getPostId()).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
 
+        Comment c = null;
+
         if (!Objects.isNull(reqDto.getParentId())) {//대댓글 작성 parentId가 속한 post 검증?
-            Comment comment = commentRepository.findById(reqDto.getParentId()).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
-            if (comment.getParentId() != null) {//대대댓글 요청시 EXCEPTION
+            Comment parent = commentRepository.findById(reqDto.getParentId()).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
+            if (parent.getParent() != null) {//대대댓글 요청시 EXCEPTION
                 throw new SowonException(Status.CANT_WRITE_RE_RE_COMMENT);
             }
 
-            if (comment.getPost().getId() != post.getId()) {
+            if (parent.getPost().getId() != post.getId()) {
                 throw new SowonException(Status.ACCESS_DENIED);
             }
+            c = parent;
         }
 
         Comment comment = Comment.builder()
                 .user(user)
                 .post(post)
                 .content(reqDto.getContent())
-                .parentId(reqDto.getParentId())
+                .parent(c)
                 .secret(reqDto.getSecret())
                 .build();
         commentRepository.save(comment);
@@ -54,4 +61,6 @@ public class CommentService {
 
         commentRepository.deleteById(comment.getId());
     }
+
+
 }

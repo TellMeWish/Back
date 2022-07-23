@@ -1,2 +1,8 @@
-package jpabook.jpashop.dto;public class GetPostDto {
+package jpabook.jpashop.dto;
+
+public class GetCommentDto {
+
+    public static class Response{
+
+    }
 }

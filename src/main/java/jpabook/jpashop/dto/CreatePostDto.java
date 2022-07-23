@@ -17,4 +17,10 @@ public class CreatePostDto {
         private int isParticipate;
         private int isPrivate;
     }
+
+    public static class Response{
+
+    }
+
+
 }
