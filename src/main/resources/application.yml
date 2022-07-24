@@ -1,14 +1,14 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/csemall?serverTimezone=Asia/Seoul
-    username: root
-    password: a8798233a
+    url: jdbc:mysql://sowon.cgtqmxutvdoj.ap-northeast-2.rds.amazonaws.com:3306/sowon?serverTimezone=Asia/Seoul
+    username: doyeon
+    password: doyeon1234
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
