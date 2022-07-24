@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain.wish;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Comment extends BaseTimeEntity{
 
     @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "parent_id")
+    @JsonIgnore
     private Comment parent;
 
     @ManyToOne(fetch=FetchType.LAZY)
@@ -29,6 +31,7 @@ public class Comment extends BaseTimeEntity{
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="post_id")
+    @JsonIgnore
     private Post post;
 
     private Boolean secret;
