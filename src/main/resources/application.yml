@@ -1,19 +1,28 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://sowon.cgtqmxutvdoj.ap-northeast-2.rds.amazonaws.com:3306/sowon?serverTimezone=Asia/Seoul
-    username: doyeon
-    password: doyeon1234
+    url: jdbc:mysql://sowon-db.cyumdfzrqmsj.ap-northeast-2.rds.amazonaws.com:3306/sowon
+    username: sowon
+    password: sowon1234
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     properties:
-      hibernate.format_sql: true
+      hibernate:
+        format_sql: true
+        show_sql: true
 server:
   port: 8081
+
+jwt:
+  header: Authorization
+  #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
+  #echo 'silvernine-tech-spring-boot-jwt-tutorial-secret-silvernine-tech-spring-boot-jwt-tutorial-secret'|base64
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  token-validity-in-seconds: 86400
 
 logging.level:
   org.hibernate.SQL: debug

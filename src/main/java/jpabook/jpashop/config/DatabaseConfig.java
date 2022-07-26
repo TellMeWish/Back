@@ -1,3 +1,4 @@
+/*
 package jpabook.jpashop.config;
 
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -17,4 +18,4 @@ public class DatabaseConfig {
         dataSourceBuilder.url("jdbc:mysql://sowon.cgtqmxutvdoj.ap-northeast-2.rds.amazonaws.com:3306/sowon?serverTimezone=Asia/Seoul");
         return dataSourceBuilder.build();
     }
-}
+}*/
