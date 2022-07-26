@@ -1,10 +1,4 @@
 package jpabook.jpashop.service;
-
-
-
-
-
-
 import javassist.bytecode.DuplicateMemberException;
 import jpabook.jpashop.domain.wish.Authority;
 import jpabook.jpashop.domain.wish.User;
@@ -18,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.Optional;
-
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -30,11 +23,12 @@ public class UserService {
     }
 
     @Transactional
-    public User signup(UserDTO userDto) throws DuplicateMemberException {
+    public User signup(UserDTO userDto) {
         if (userRepository.findOneWithAuthoritiesByUsername(userDto.getUsername()).orElse(null) != null) {
-            throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
+            //throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
         }
 
+        //빌더 패턴의 장점
         Authority authority = Authority.builder()
                 .authorityName("ROLE_USER")
                 .build();
