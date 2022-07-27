@@ -22,6 +22,8 @@ public class UserController {
         this.userService = userService;
     }
 
+
+    @CrossOrigin("*")
     @GetMapping("/hello")
     public ResponseEntity<String> hello() {
         return ResponseEntity.ok("hello");
@@ -32,6 +34,7 @@ public class UserController {
         response.sendRedirect("/api/user");
     }
 
+    @CrossOrigin("*")
     @PostMapping("/signup")
     public ResponseEntity<User> signup(
             @Valid @RequestBody UserDTO userDto

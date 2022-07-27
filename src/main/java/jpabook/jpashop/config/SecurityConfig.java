@@ -84,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/authenticate").permitAll()
                 .antMatchers("/api/signup").permitAll()
 
-                .anyRequest().authenticated()
+                .anyRequest().permitAll() //임시로 권한 풀어놓음
 
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
