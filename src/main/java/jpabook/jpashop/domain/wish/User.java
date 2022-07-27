@@ -39,12 +39,6 @@ public class User {
     @Column(name = "activated")
     private boolean activated;
 
-    @Column(nullable = false)
-    private String phone_num;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt = LocalDateTime.now();
-
     @ManyToMany
     @JoinTable(
             name = "user_authority",
