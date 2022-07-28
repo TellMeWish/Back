@@ -1,6 +1,6 @@
 package jpabook.jpashop.controller;
 
-import jpabook.jpashop.dto.AddCommentDto;
+import jpabook.jpashop.dto.post.AddCommentDto;
 import jpabook.jpashop.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

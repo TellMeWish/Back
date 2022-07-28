@@ -5,17 +5,13 @@ import jpabook.jpashop.common.exception.Status;
 import jpabook.jpashop.domain.wish.Comment;
 import jpabook.jpashop.domain.wish.Post;
 import jpabook.jpashop.domain.wish.User;
-import jpabook.jpashop.dto.AddCommentDto;
+import jpabook.jpashop.dto.post.AddCommentDto;
 import jpabook.jpashop.repository.CommentRepository;
 import jpabook.jpashop.repository.PostRepository;
 import jpabook.jpashop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Objects;
 
