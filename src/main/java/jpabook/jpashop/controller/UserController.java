@@ -1,5 +1,9 @@
 package jpabook.jpashop.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import javassist.bytecode.DuplicateMemberException;
 import jpabook.jpashop.domain.wish.User;
 import jpabook.jpashop.dto.UserDTO;
@@ -34,6 +38,11 @@ public class UserController {
         response.sendRedirect("/api/user");
     }
 
+    @ApiOperation(value="회원가입", notes="회원가입 API")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "API 정상 작동"),
+            @ApiResponse(code = 500, message = "서버 에러")
+    })
     @CrossOrigin("*")
     @PostMapping("/signup")
     public ResponseEntity<User> signup(
