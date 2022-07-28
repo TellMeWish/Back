@@ -40,7 +40,13 @@ public class PostService {
 
     public void updatePost(UpdatePostDto.Request reqDto, Long id) {
         Post findPost = postRepo.findById(id).get();
-        Post post = modelMapper.map(reqDto, Post.class);
+
+        findPost.setContent(reqDto.getContent());
+        findPost.setTitle(reqDto.getTitle());
+        findPost.setCategory(reqDto.getCategory());
+        findPost.setIsParticipate(reqDto.getIsParticipate());
+        findPost.setIsPrivate(reqDto.getIsPrivate());
+        //Post post = modelMapper.map(reqDto, Post.class);
         postRepo.save(findPost);
     }
 
@@ -62,5 +68,10 @@ public class PostService {
 
     }
 
+  /*  public void findAllPage(Pageable pageable) {
+
+         postRepo.findAll(pageable).map(GetPostDto.Response::from);
+
+    }*/
 
 }

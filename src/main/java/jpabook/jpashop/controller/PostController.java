@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,6 +54,8 @@ public class PostController {
         postService.deletePost(id);
     }
 
+
+
     @GetMapping("/postList")
     public Page<Post> getPosts(@RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy)
     {
@@ -60,10 +63,15 @@ public class PostController {
                 PageRequest.of(
                         page.orElse(0),
                         size.orElse(30),
-                        Sort.Direction.ASC, sortBy.orElse("id")
+                        Sort.Direction.DESC, sortBy.orElse("id")
                 )
         );
     }
 
+  /*  @GetMapping("/postList")
+    public ResponseEntity getPostList(Pageable pageable){
+
+        return ResponseEntity.ok().body(postService.findAllPage(pageable));
+    }*/
 
 }
