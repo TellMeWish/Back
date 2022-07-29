@@ -16,7 +16,7 @@ import static javax.persistence.FetchType.LAZY;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Post {
+public class Post extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
@@ -51,10 +51,10 @@ public class Post {
     @Column(name="like_count")
     private int likeCount;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt = LocalDateTime.now();
+/*    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    private LocalDateTime updatedAt; // 자동화 추가하기
+    private LocalDateTime updatedAt; // 자동화 추가하기*/
 
     @ManyToOne
     @JoinColumn(name = "user_id")
