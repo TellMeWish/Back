@@ -15,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -73,5 +75,11 @@ public class PostService {
          postRepo.findAll(pageable).map(GetPostDto.Response::from);
 
     }*/
+
+
+    @Transactional
+    public int updateView(Long id) {
+        return postRepo.updateView(id);
+    }
 
 }

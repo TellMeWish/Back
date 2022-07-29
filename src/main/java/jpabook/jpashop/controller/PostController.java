@@ -40,6 +40,9 @@ public class PostController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GetPostDto.Response> getPost(@PathVariable Long id) {
+
+        postService.updateView(id); // views ++
+
         return ResponseEntity.ok().body(postService.getPost(id));
     }
 
