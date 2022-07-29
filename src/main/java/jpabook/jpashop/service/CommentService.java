@@ -6,6 +6,7 @@ import jpabook.jpashop.domain.wish.Comment;
 import jpabook.jpashop.domain.wish.Post;
 import jpabook.jpashop.domain.wish.User;
 import jpabook.jpashop.dto.post.AddCommentDto;
+import jpabook.jpashop.dto.post.UpdatePostDto;
 import jpabook.jpashop.repository.CommentRepository;
 import jpabook.jpashop.repository.PostRepository;
 import jpabook.jpashop.repository.UserRepository;
@@ -56,6 +57,15 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new RuntimeException("없는 댓글 아이디"));
 
         commentRepository.deleteById(comment.getId());
+    }
+
+    public void updateComment(AddCommentDto.Request reqDto, Long id) {
+        Comment comment = commentRepository.findById(id).orElseThrow(() ->new IllegalArgumentException("해당 댓글이 존재하지 않습니다. " + id));
+
+
+        /*comment.setContent(reqDto.getContent());
+        comment.setPost(reqDto.getSecret());*/
+
     }
 
 
