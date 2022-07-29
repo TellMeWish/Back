@@ -3,11 +3,13 @@ package jpabook.jpashop.controller;
 import jpabook.jpashop.domain.wish.Post;
 import jpabook.jpashop.dto.post.CreatePostDto;
 import jpabook.jpashop.dto.post.GetPostDto;
+import jpabook.jpashop.dto.post.GetPostListDto;
 import jpabook.jpashop.dto.post.UpdatePostDto;
 import jpabook.jpashop.repository.PostRepository;
 import jpabook.jpashop.repository.UserRepository;
 import jpabook.jpashop.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
@@ -31,6 +35,9 @@ public class PostController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
 
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody CreatePostDto.Request reqDto) {
@@ -60,15 +67,22 @@ public class PostController {
 
 
     @GetMapping("/postList")
-    public Page<Post> getPosts(@RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy)
+    public ResponseEntity<GetPostListDto.Response> getPostList(@RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy)
     {
-        return postRepository.findAll(
+        Page<Post> pagePost =  postRepository.findAll(
                 PageRequest.of(
                         page.orElse(0),
                         size.orElse(30),
                         Sort.Direction.DESC, sortBy.orElse("id")
                 )
         );
+
+        List<Post> postList = pagePost.getContent();
+
+        return ResponseEntity.ok().body(GetPostListDto.Response.builder()
+                .postList(postList.stream().map(post -> modelMapper.map(post, GetPostListDto.Post.class)).collect(Collectors.toList()))
+                .build());
+
     }
 
   /*  @GetMapping("/postList")

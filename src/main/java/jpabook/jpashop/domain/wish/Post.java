@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -65,6 +66,7 @@ public class Post extends BaseTimeEntity{
     private Location location;
 
     @OneToMany(mappedBy="post", cascade = CascadeType.ALL)
+    @Where(clause = "parent_id is null")
     private List<Comment> commentList = new ArrayList<>();
 
     @OneToMany

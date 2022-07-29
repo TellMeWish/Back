@@ -6,14 +6,13 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class GetPostDto {
-
+public class GetPostListDto {
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response{
-        private Post post;
+        private List<Post> postList;
     }
 
     @Getter
@@ -30,7 +29,7 @@ public class GetPostDto {
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private LocalDateTime createdAt;
-        private List<Comment> commentList;
+        private List<GetPostDto.Comment> commentList;
     }
 
     @Getter
@@ -43,7 +42,6 @@ public class GetPostDto {
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private LocalDateTime createdAt;
-        private List<Comment> commentList;
+        private List<GetPostDto.Comment> commentList;
     }
-
 }
