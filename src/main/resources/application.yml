@@ -14,6 +14,10 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 20MB
 server:
   port: 8081
 

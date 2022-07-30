@@ -1,5 +1,6 @@
 package jpabook.jpashop.dto.post;
 
+import jpabook.jpashop.domain.wish.Photo;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,7 @@ public class GetPostDto {
         private int viewCount;
         private int likeCount;
         private LocalDateTime createdAt;
+        private List<Photo> photoList;
         private List<Comment> commentList;
     }
 

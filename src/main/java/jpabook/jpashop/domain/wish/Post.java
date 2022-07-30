@@ -3,7 +3,6 @@ package jpabook.jpashop.domain.wish;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -67,6 +66,15 @@ public class Post {
     @OneToMany(mappedBy="post", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
 
-    @OneToMany
-    private List<File> files = new ArrayList<>();
+    @OneToMany(mappedBy = "post",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            orphanRemoval = true)
+    private List<Photo> photos = new ArrayList<>();
+
+    public void addPhoto(Photo photo) {
+        this.photos.add(photo);
+
+        if(photo.getPost() != this)
+            photo.setPost(this);
+    }
 }

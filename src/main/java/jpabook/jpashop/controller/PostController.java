@@ -1,11 +1,15 @@
 package jpabook.jpashop.controller;
 
+import jpabook.jpashop.domain.wish.Photo;
 import jpabook.jpashop.domain.wish.Post;
+import jpabook.jpashop.dto.PhotoResponseDTO;
 import jpabook.jpashop.dto.post.CreatePostDto;
 import jpabook.jpashop.dto.post.GetPostDto;
 import jpabook.jpashop.dto.post.UpdatePostDto;
+import jpabook.jpashop.repository.PhotoRepository;
 import jpabook.jpashop.repository.PostRepository;
 import jpabook.jpashop.repository.UserRepository;
+import jpabook.jpashop.service.PhotoService;
 import jpabook.jpashop.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +20,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin("*")
@@ -25,6 +32,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
+    private final PhotoService photoService;
 
     @Autowired
     PostRepository postRepository;
@@ -32,20 +40,34 @@ public class PostController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    PhotoRepository photoRepository;
+
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody CreatePostDto.Request reqDto) {
-        postService.insertPost(reqDto);
+    public ResponseEntity<Void> create(  @RequestPart(value="file", required=false) List<MultipartFile> files,
+                                         @RequestPart(value = "requestDto") CreatePostDto.Request reqDto) throws Exception{
+        postService.insertPost(reqDto, files);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<GetPostDto.Response> getPost(@PathVariable Long id) {
+        //List<PhotoResponseDTO> photoResponseDtoList = photoService.findAllByPost(id);
+
+        List<Photo> photoList = photoRepository.findAllByPostId(id);
+
+//        for(PhotoResponseDTO photoResponseDto : photoResponseDtoList)
+//            photoId.add(photoResponseDto.getFileId());
+
+
         return ResponseEntity.ok().body(postService.getPost(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Post> update(@RequestBody UpdatePostDto.Request reqDto, @PathVariable Long id) {
-        postService.updatePost(reqDto,id);
+    public ResponseEntity<Post> update(@RequestPart(value = "requestDto") UpdatePostDto.Request reqDto,
+                                       @RequestPart(value = "file", required=false) List<MultipartFile> files,
+                                       @PathVariable Long id) throws Exception {
+        postService.updatePost(reqDto,id, files);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

@@ -1,8 +1,11 @@
 package jpabook.jpashop.dto.post;
 
 
+import jpabook.jpashop.domain.wish.Photo;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 
 public class CreatePostDto {
@@ -16,6 +19,7 @@ public class CreatePostDto {
         private String category;
         private int isParticipate;
         private int isPrivate;
+        private List<Photo> photos;
     }
 
     public static class Response{

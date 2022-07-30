@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 
 @RestController
@@ -52,7 +53,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    //@PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<User> getMyUserInfo(HttpServletRequest request) {
         return ResponseEntity.ok(userService.getMyUserWithAuthorities().get());
     }
