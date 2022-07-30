@@ -31,15 +31,6 @@ public class PostService {
         postRepo.save(post);
     }
 
-  /*  public Post updatePost(Post post, Long id) {
-        Post findPost = postRepo.findById(id).get();
-
-        findPost.setContent(post.getContent());
-        findPost.setTitle(post.getTitle());
-
-        return postRepo.save(findPost);
-    }*/
-
     public void updatePost(UpdatePostDto.Request reqDto, Long id) {
         Post findPost = postRepo.findById(id).get();
 

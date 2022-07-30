@@ -18,6 +18,7 @@ public class GetPostListDto {
     @Getter
     @Setter
     public static class Post{
+        private Long id;
         private String title;
         private String content;
         private String category;

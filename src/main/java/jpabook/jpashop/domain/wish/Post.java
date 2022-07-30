@@ -65,10 +65,10 @@ public class Post extends BaseTimeEntity{
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @OneToMany(mappedBy="post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="post", cascade = CascadeType.ALL, orphanRemoval = true)
     @Where(clause = "parent_id is null")
     private List<Comment> commentList = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(orphanRemoval = true)
     private List<File> files = new ArrayList<>();
 }
