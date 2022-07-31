@@ -12,10 +12,15 @@ import jpabook.jpashop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -55,9 +60,19 @@ public class PostService {
     }
 
 
-    public Page<Post> findAllPage(Pageable pageable) {
+    public List<Post> getPostList(Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
 
-        return postRepo.findAll(pageable);
+        Page<Post> pagePost =  postRepo.findAll(
+                PageRequest.of(
+                        page.orElse(0),
+                        size.orElse(30),
+                        Sort.Direction.DESC, sortBy.orElse("id")
+                )
+        );
+
+        List<Post> postList = pagePost.getContent();
+
+        return postList;
 
     }
 

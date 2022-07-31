@@ -71,7 +71,7 @@ public class PostController {
     @GetMapping("/postList")
     public ResponseEntity<GetPostListDto.Response> getPostList(@RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy)
     {
-        Page<Post> pagePost =  postRepository.findAll(
+       /* Page<Post> pagePost =  postRepository.findAll(
                 PageRequest.of(
                         page.orElse(0),
                         size.orElse(30),
@@ -79,7 +79,11 @@ public class PostController {
                 )
         );
 
-        List<Post> postList = pagePost.getContent();
+        List<Post> postList = pagePost.getContent();*/
+
+
+
+        List<Post> postList =  postService.getPostList(page,size,sortBy);
 
         return ResponseEntity.ok().body(GetPostListDto.Response.builder()
                 .postList(postList.stream().map(post -> modelMapper.map(post, GetPostListDto.Post.class)).collect(Collectors.toList()))

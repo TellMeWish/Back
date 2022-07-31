@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-
+    @Query(value = "select p from Post p where p.isPrivate = 0")
     Page<Post> findAll(Pageable pageable);
 
     @Modifying
