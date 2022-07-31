@@ -7,6 +7,7 @@ import jpabook.jpashop.dto.post.GetPostListDto;
 import jpabook.jpashop.dto.post.UpdatePostDto;
 import jpabook.jpashop.repository.PostRepository;
 import jpabook.jpashop.repository.UserRepository;
+import jpabook.jpashop.service.LikesService;
 import jpabook.jpashop.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
+    private final LikesService likesService;
 
     @Autowired
     PostRepository postRepository;
@@ -85,10 +87,15 @@ public class PostController {
 
     }
 
-  /*  @GetMapping("/postList")
-    public ResponseEntity getPostList(Pageable pageable){
 
-        return ResponseEntity.ok().body(postService.findAllPage(pageable));
-    }*/
+    @PostMapping("/like/{postId}/{userId}")
+    public void likes(@PathVariable Long postId, @PathVariable Long userId){
+        likesService.likes(postId, userId);
+    }
+
+    @DeleteMapping("/unLike/{postId}/{userId}")
+    public void unLikes(@PathVariable Long postId, @PathVariable Long userId){
+        likesService.unLikes(postId, userId);
+    }
 
 }

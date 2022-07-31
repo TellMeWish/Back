@@ -26,8 +26,8 @@ public class GetPostListDto {
         private int isCompleted;
         private int isParticipate;
         private int viewCount;
-        private int likeCount;
 
+        private int likeCount;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private LocalDateTime createdAt;
         private List<GetPostDto.Comment> commentList;

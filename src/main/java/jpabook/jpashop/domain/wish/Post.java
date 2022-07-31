@@ -1,13 +1,13 @@
 package jpabook.jpashop.domain.wish;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,10 +52,10 @@ public class Post extends BaseTimeEntity{
     @Column(name="like_count")
     private int likeCount;
 
-/*    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"post"})
+    private List<Likes> likesList = new ArrayList<>();
 
-    private LocalDateTime updatedAt; // 자동화 추가하기*/
 
     @ManyToOne
     @JoinColumn(name = "user_id")
