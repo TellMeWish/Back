@@ -43,9 +43,9 @@ public class PostController {
     @Autowired
     PhotoRepository photoRepository;
 
-    @PostMapping
+    @PostMapping(consumes = {"multipart/form-data"})
     public ResponseEntity<Void> create(  @RequestPart(value="file", required=false) List<MultipartFile> files,
-                                         @RequestPart(value = "requestDto") CreatePostDto.Request reqDto) throws Exception{
+                                         @RequestPart(value = "dto") CreatePostDto.Request reqDto) throws Exception{
         postService.insertPost(reqDto, files);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
