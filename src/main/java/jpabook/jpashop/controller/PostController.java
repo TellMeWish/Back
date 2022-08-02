@@ -1,10 +1,8 @@
 package jpabook.jpashop.controller;
 
+import io.swagger.annotations.ApiOperation;
 import jpabook.jpashop.domain.wish.Post;
-import jpabook.jpashop.dto.post.CreatePostDto;
-import jpabook.jpashop.dto.post.GetPostDto;
-import jpabook.jpashop.dto.post.GetPostListDto;
-import jpabook.jpashop.dto.post.UpdatePostDto;
+import jpabook.jpashop.dto.post.*;
 import jpabook.jpashop.repository.PostRepository;
 import jpabook.jpashop.repository.UserRepository;
 import jpabook.jpashop.service.LikesService;
@@ -20,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -71,18 +70,6 @@ public class PostController {
     @GetMapping("/postList")
     public ResponseEntity<GetPostListDto.Response> getPostList(@RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy)
     {
-       /* Page<Post> pagePost =  postRepository.findAll(
-                PageRequest.of(
-                        page.orElse(0),
-                        size.orElse(30),
-                        Sort.Direction.DESC, sortBy.orElse("id")
-                )
-        );
-
-        List<Post> postList = pagePost.getContent();*/
-
-
-
         List<Post> postList =  postService.getPostList(page,size,sortBy);
 
         return ResponseEntity.ok().body(GetPostListDto.Response.builder()
@@ -91,7 +78,7 @@ public class PostController {
 
     }
 
-
+/*
     @PostMapping("/like/{postId}/{userId}")
     public void likes(@PathVariable Long postId, @PathVariable Long userId){
         likesService.likes(postId, userId);
@@ -101,5 +88,14 @@ public class PostController {
     public void unLikes(@PathVariable Long postId, @PathVariable Long userId){
         likesService.unLikes(postId, userId);
     }
+*/
 
+
+    @ApiOperation(value = "게시글 좋아요", notes = "좋아요 안되어있을시 좋아요, 좋아요 되어있을시 좋아요 취소")
+    @PostMapping("/like")
+    public ResponseEntity<LikesDto> likes(@RequestBody @Valid LikesDto likesDto) {
+        likesService.likes(likesDto);
+       // return new ResponseEntity<>(likesDto, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 }

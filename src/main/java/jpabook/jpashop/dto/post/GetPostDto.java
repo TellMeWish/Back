@@ -28,7 +28,7 @@ public class GetPostDto {
         private int isParticipate;
         private int viewCount;
         private int likeCount;
-        private List<Likes> likesList;
+       //private List<Likes> likesList;
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private LocalDateTime createdAt;
