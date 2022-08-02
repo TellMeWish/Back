@@ -4,11 +4,6 @@ spring:
     url: jdbc:mysql://sowon-db.cyumdfzrqmsj.ap-northeast-2.rds.amazonaws.com:3306/sowon
     username: sowon
     password: sowon1234
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/wish?useUnicode=true&serverTimezone=Asia/Seoul
-#    username: root
-#    password: k4881381
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: true
@@ -21,8 +16,8 @@ spring:
         show_sql: true
   servlet:
     multipart:
-      maxFileSize: 10MB
-      maxRequestSize: 20MB
+      maxFileSize: 50MB
+      maxRequestSize: 50MB
 server:
   port: 8081
 

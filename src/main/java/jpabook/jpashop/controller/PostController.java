@@ -1,7 +1,10 @@
 package jpabook.jpashop.controller;
 
+import jpabook.jpashop.common.exception.SowonException;
+import jpabook.jpashop.common.exception.Status;
 import jpabook.jpashop.domain.wish.Photo;
 import jpabook.jpashop.domain.wish.Post;
+import jpabook.jpashop.domain.wish.User;
 import jpabook.jpashop.dto.PhotoResponseDTO;
 import jpabook.jpashop.dto.post.CreatePostDto;
 import jpabook.jpashop.dto.post.GetPostDto;
@@ -18,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,12 +47,14 @@ public class PostController {
     @Autowired
     PhotoRepository photoRepository;
 
-    @PostMapping(consumes = {"multipart/form-data"})
+    @PostMapping
     public ResponseEntity<Void> create(  @RequestPart(value="file", required=false) List<MultipartFile> files,
                                          @RequestPart(value = "dto") CreatePostDto.Request reqDto) throws Exception{
+        System.out.println("post 받아오기 성공.. ");
         postService.insertPost(reqDto, files);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<GetPostDto.Response> getPost(@PathVariable Long id) {
@@ -64,8 +70,8 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Post> update(@RequestPart(value = "requestDto") UpdatePostDto.Request reqDto,
-                                       @RequestPart(value = "file", required=false) List<MultipartFile> files,
+    public ResponseEntity<Post> update(@RequestPart(value = "dto") UpdatePostDto.Request reqDto,
+                                       @RequestPart(value = "img", required=false) List<MultipartFile> files,
                                        @PathVariable Long id) throws Exception {
         postService.updatePost(reqDto,id, files);
         return ResponseEntity.status(HttpStatus.CREATED).build();

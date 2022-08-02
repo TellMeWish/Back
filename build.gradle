@@ -50,7 +50,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	//File 입출력 관련
-	implementation 'commons-io:commons-io:2.6'
+	implementation 'commons-io:commons-io:2.11.0'
 }
 
 test {

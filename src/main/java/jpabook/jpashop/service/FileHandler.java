@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -34,19 +35,22 @@ public class FileHandler {
         List<Photo> photoList = new ArrayList<>();
 
         //파일 이름 생성 + 경로설정
-        String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
+        String absolutePath = new File("").getAbsolutePath() + File.separator;
         String path = createFilePath();
 
 
         //업로드 디렉토리 생성
         File file = new File(path);
-        if (!file.exists()) {
-            try {
-                file.mkdir();
-            } catch (Exception e) {
-                e.getStackTrace();
-            }
+        boolean isDirectoryCreated = file.exists();
+        if (!isDirectoryCreated) {
+            System.out.println("폴더생성");
+            System.out.println(file.getPath());
+            System.out.println(file.getAbsolutePath());
+            Files.createDirectories(file.toPath());
+            //isDirectoryCreated = file.mkdir();
+            System.out.println("폴더생성 완료");
         }
+        System.out.println("폴더생성 구간을 지났습니다");
 
 
         //다중 파일 처리
@@ -100,7 +104,7 @@ public class FileHandler {
                 DateTimeFormatter.ofPattern("yyyyMMdd");
         String current_date = now.format(dateTimeFormatter);
 
-        return "images" + File.separator + current_date;
+        return "images" + File.separator + current_date + File.separator;
     }
 
 

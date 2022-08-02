@@ -14,7 +14,7 @@ import static javax.persistence.FetchType.LAZY;
 @Table(name = "file")
 public class Photo extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="file_id")
     private Long id;
 
