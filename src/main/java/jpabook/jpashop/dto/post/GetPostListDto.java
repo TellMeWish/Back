@@ -1,27 +1,27 @@
 package jpabook.jpashop.dto.post;
 
-import jpabook.jpashop.domain.wish.Photo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jpabook.jpashop.domain.wish.Likes;
+import jpabook.jpashop.domain.wish.Photo;
 import jpabook.jpashop.domain.wish.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class GetPostDto {
-
+public class GetPostListDto {
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response{
-        private Post post;
+        private List<Post> postList;
     }
 
     @Getter
     @Setter
     public static class Post{
+        private Long id;
         private User post_user_id;
         private String title;
         private String content;
@@ -31,12 +31,11 @@ public class GetPostDto {
         private int isParticipate;
         private int viewCount;
         private int likeCount;
-       //private List<Likes> likesList;
-
+        //private List<Likes> likesList;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private LocalDateTime createdAt;
         private List<Long> photoIdList;
-        private List<Comment> commentList;
+        private List<GetPostDto.Comment> commentList;
     }
 
     @Getter
@@ -49,7 +48,6 @@ public class GetPostDto {
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private LocalDateTime createdAt;
-        private List<Comment> commentList;
+        private List<GetPostDto.Comment> commentList;
     }
-
 }

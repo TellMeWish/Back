@@ -36,6 +36,6 @@ public class Comment extends BaseTimeEntity{
 
     private Boolean secret;
 
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent", orphanRemoval = true)
     private List<Comment> commentList = new ArrayList<>();
 }

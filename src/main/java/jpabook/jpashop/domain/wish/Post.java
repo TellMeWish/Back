@@ -1,14 +1,14 @@
 package jpabook.jpashop.domain.wish;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import org.hibernate.annotations.Where;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
@@ -50,10 +50,10 @@ public class Post extends BaseTimeEntity{
     @Column(name="like_count")
     private int likeCount;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"post"})
+    private List<Likes> likesList = new ArrayList<>();
 
-    private LocalDateTime updatedAt; // 자동화 추가하기
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -63,7 +63,8 @@ public class Post extends BaseTimeEntity{
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @OneToMany(mappedBy="post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Where(clause = "parent_id is null")
     private List<Comment> commentList = new ArrayList<>();
 
     @OneToMany(mappedBy = "post",
@@ -77,5 +78,6 @@ public class Post extends BaseTimeEntity{
         if(photo.getPost() != this)
             photo.setPost(this);
     }
+
 
 }

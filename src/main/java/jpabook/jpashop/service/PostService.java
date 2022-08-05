@@ -15,7 +15,9 @@ import jpabook.jpashop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +25,11 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,15 +41,15 @@ public class PostService {
 
 
     @Transactional
-    public void insertPost(CreatePostDto.Request reqDto, List<MultipartFile> files) throws Exception{
+    public void insertPost(CreatePostDto.Request reqDto, List<MultipartFile> files) throws Exception {
         User user = userRepo.findById(reqDto.getUserId()).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
         Post post = modelMapper.map(reqDto, Post.class);
 
 
         //다중파일처리
         List<Photo> photoList = FileHandler.parseFileInfo(post, files);
-        if(!photoList.isEmpty()) {
-            for(Photo photo : photoList) {
+        if (!photoList.isEmpty()) {
+            for (Photo photo : photoList) {
                 post.addPhoto(photoRepo.save(photo));
             }
         }
@@ -52,14 +59,6 @@ public class PostService {
         postRepo.save(post);
     }
 
-  /*  public Post updatePost(Post post, Long id) {
-        Post findPost = postRepo.findById(id).get();
-
-        findPost.setContent(post.getContent());
-        findPost.setTitle(post.getTitle());
-
-        return postRepo.save(findPost);
-    }*/
 
     public void updatePost(UpdatePostDto.Request reqDto, Long id, List<MultipartFile> multipartFileList) throws Exception {
         Post findPost = postRepo.findById(id).get();
@@ -74,7 +73,7 @@ public class PostService {
         //파일처리
         List<MultipartFile> newMultipartFileList = updatePhotoList(multipartFileList, id);
         List<Photo> photoList = FileHandler.parseFileInfo(findPost, newMultipartFileList);
-        if(!photoList.isEmpty()){
+        if (!photoList.isEmpty()) {
             photoRepo.saveAll(photoList);
         }
         //findPost.setPhotos(photoList);
@@ -88,7 +87,7 @@ public class PostService {
     }
 
     public GetPostDto.Response getPost(Long id, List<Long> photoId) {
-        Post post =  postRepo.findById(id).orElseThrow(()-> new SowonException(Status.NOT_FOUND));
+        Post post = postRepo.findById(id).orElseThrow(() -> new SowonException(Status.NOT_FOUND));
         //post.setPhotos(photoId);
 
         GetPostDto.Post resPost = modelMapper.map(post, GetPostDto.Post.class);
@@ -99,17 +98,54 @@ public class PostService {
     }
 
 
-    public Page<Post> findAllPage(Pageable pageable) {
+    public List<Post> getPostList(Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
 
-        return postRepo.findAll(pageable);
+        Page<Post> pagePost = postRepo.findAll(
+                PageRequest.of(
+                        page.orElse(0),
+                        size.orElse(30),
+                        Sort.Direction.DESC, sortBy.orElse("id")
+                )
+        );
+
+        List<Post> postList = pagePost.getContent();
+
+        return postList;
 
     }
 
-  /*  public void findAllPage(Pageable pageable) {
+    public List<Post> getPostListByUserId(Long id, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
 
-         postRepo.findAll(pageable).map(GetPostDto.Response::from);
+        Page<Post> pagePost = postRepo.findAllByUserId(id,
+                PageRequest.of(
+                        page.orElse(0),
+                        size.orElse(30),
+                        Sort.Direction.DESC, sortBy.orElse("id")
+                )
+        );
 
-    }*/
+        List<Post> postList = pagePost.getContent();
+
+        return postList;
+
+    }
+
+
+    public List<Post> getLikedPostList(Long id, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
+
+        Page<Post> pagePost = postRepo.findLikedPostById(id,
+                PageRequest.of(
+                        page.orElse(0),
+                        size.orElse(30),
+                        Sort.Direction.DESC, sortBy.orElse("id")
+                )
+        );
+
+        List<Post> postList = pagePost.getContent();
+
+        return postList;
+
+    }
 
     public List<MultipartFile> updatePhotoList(List<MultipartFile> oldMultiFileList, Long postId) {
         List<Photo> dbPhotoList = photoRepo.findAllByPostId(postId);
@@ -125,13 +161,13 @@ public class PostService {
                 // 파일 삭제
                 for (Photo dbPhoto : dbPhotoList)
                     photoRepo.deleteById(dbPhoto.getId());
-            }else {  // 전달되어온 파일 한 장 이상 존재
+            } else {  // 전달되어온 파일 한 장 이상 존재
 
                 // DB에 저장되어있는 파일 원본명 목록
                 List<String> dbOriginNameList = new ArrayList<>();
 
                 // DB의 파일 원본명 추출
-                for(Photo dbPhoto : dbPhotoList) {
+                for (Photo dbPhoto : dbPhotoList) {
                     // file id로 DB에 저장된 파일 정보 얻어오기
                     Photo entity = photoRepo.findById(dbPhoto.getId()).orElseThrow(()
                             -> new IllegalArgumentException("파일이 존재하지 않습니다"));
@@ -145,16 +181,16 @@ public class PostService {
                     String dbOriFileName = dbPhotoDto.getFileOriName();
 
 
-                    if(!oldMultiFileList.contains(dbOriFileName))  // 서버에 저장된 파일들 중 전달되어온 파일이 존재하지 않는다면
+                    if (!oldMultiFileList.contains(dbOriFileName))  // 서버에 저장된 파일들 중 전달되어온 파일이 존재하지 않는다면
                         photoRepo.deleteById(dbPhoto.getId());  // 파일 삭제
                     else  // 그것도 아니라면
-                        dbOriginNameList.add(dbOriFileName);	// DB에 저장할 파일 목록에 추가
+                        dbOriginNameList.add(dbOriFileName);    // DB에 저장할 파일 목록에 추가
                 }
 
                 for (MultipartFile multipartFile : oldMultiFileList) { // 전달되어온 파일 하나씩 검사
                     // 파일의 원본명 얻어오기
                     String multipartOrigName = multipartFile.getOriginalFilename();
-                    if(!dbOriginNameList.contains(multipartOrigName)){   // DB에 없는 파일이면
+                    if (!dbOriginNameList.contains(multipartOrigName)) {   // DB에 없는 파일이면
                         newFileList.add(multipartFile); // DB에 저장할 파일 목록에 추가
                     }
                 }
@@ -163,4 +199,8 @@ public class PostService {
         return newFileList;
     }
 
+    @Transactional
+    public int updateView(Long id){
+        return postRepo.updateView(id);
+    }
 }
