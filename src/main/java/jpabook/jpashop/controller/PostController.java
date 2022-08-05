@@ -98,4 +98,16 @@ public class PostController {
        // return new ResponseEntity<>(likesDto, HttpStatus.CREATED);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @ApiOperation(value = "좋아요 한 게시글 목록", notes = "파라미터 값은 사용자 아이디")
+    @GetMapping("/likedPostList/{id}")
+    public ResponseEntity<GetPostListDto.Response> getLikedPostList(@PathVariable Long id, @RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy)
+    {
+        List<Post> postList =  postService.getLikedPostList(id, page,size,sortBy);
+
+        return ResponseEntity.ok().body(GetPostListDto.Response.builder()
+                .postList(postList.stream().map(post -> modelMapper.map(post, GetPostListDto.Post.class)).collect(Collectors.toList()))
+                .build());
+
+    }
 }

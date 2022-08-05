@@ -1,6 +1,7 @@
 package jpabook.jpashop.dto.post;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jpabook.jpashop.domain.wish.Likes;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,7 @@ public class GetPostListDto {
         private int isParticipate;
         private int viewCount;
         private int likeCount;
+        //private List<Likes> likesList;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private LocalDateTime createdAt;
         private List<GetPostDto.Comment> commentList;
