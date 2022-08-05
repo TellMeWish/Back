@@ -27,7 +27,9 @@ public class FileHandler {
 
     public final static String rootPath = System.getProperty("user.dir");
 
-    public static List<Photo> parseFileInfo(List<MultipartFile> multipartFiles) throws IOException {
+    public static List<Photo> parseFileInfo(
+            Post post,
+            List<MultipartFile> multipartFiles) throws IOException {
         if (CollectionUtils.isEmpty(multipartFiles)) {
             return Collections.emptyList();
         }
@@ -86,6 +88,9 @@ public class FileHandler {
                     photoDto.getFileSize()
             );
 
+            if(post.getId() != null) {
+                photo.setPost(post);
+            }
 
             photoList.add(photo);
 

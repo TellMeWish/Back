@@ -48,9 +48,8 @@ public class PostController {
     PhotoRepository photoRepository;
 
     @PostMapping
-    public ResponseEntity<Void> create(  @RequestPart(value="file", required=false) List<MultipartFile> files,
+    public ResponseEntity<Void> create(  @RequestPart(value="img", required=false) List<MultipartFile> files,
                                          @RequestPart(value = "dto") CreatePostDto.Request reqDto) throws Exception{
-        System.out.println("post 받아오기 성공.. ");
         postService.insertPost(reqDto, files);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

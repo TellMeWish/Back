@@ -77,4 +77,5 @@ public class Post extends BaseTimeEntity{
         if(photo.getPost() != this)
             photo.setPost(this);
     }
+
 }

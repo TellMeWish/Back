@@ -15,10 +15,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/image")
+@RequestMapping("/photo")
 public class PhotoController {
     private final PostService postService;
     private final PhotoRepository photoRepo;
@@ -40,7 +41,16 @@ public class PhotoController {
             path = photo.getFileUrl();
         }
         else {
-            path = "images" + File.separator + "thumbnail" + File.separator + "thumbnail.png";
+            String thumbnailFolderPath = "images" + File.separator + "thumbnail" + File.separator;
+            path = thumbnailFolderPath + "thumbnail.png";
+
+            //썸네일 디렉토리 생성
+            File file = new File(thumbnailFolderPath );
+            boolean isDirectoryCreated = file.exists();
+            if (!isDirectoryCreated) {
+                Files.createDirectories(file.toPath());
+
+            }
         }
 
         InputStream imageStream = new FileInputStream(absolutePath + path);

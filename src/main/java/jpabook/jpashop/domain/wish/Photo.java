@@ -18,7 +18,7 @@ public class Photo extends BaseTimeEntity {
     @Column(name="file_id")
     private Long id;
 
-    @ManyToOne(fetch=LAZY)
+    @ManyToOne
     @JoinColumn(name="post_id")
     private Post post;
 

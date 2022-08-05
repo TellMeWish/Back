@@ -40,7 +40,7 @@ public class PostService {
 
 
         //다중파일처리
-        List<Photo> photoList = FileHandler.parseFileInfo(files);
+        List<Photo> photoList = FileHandler.parseFileInfo(post, files);
         if(!photoList.isEmpty()) {
             for(Photo photo : photoList) {
                 post.addPhoto(photoRepo.save(photo));
@@ -73,11 +73,11 @@ public class PostService {
 
         //파일처리
         List<MultipartFile> newMultipartFileList = updatePhotoList(multipartFileList, id);
-        List<Photo> photoList = FileHandler.parseFileInfo(newMultipartFileList);
+        List<Photo> photoList = FileHandler.parseFileInfo(findPost, newMultipartFileList);
         if(!photoList.isEmpty()){
             photoRepo.saveAll(photoList);
         }
-        findPost.setPhotos(photoList);
+        //findPost.setPhotos(photoList);
 
 
         postRepo.save(findPost);
