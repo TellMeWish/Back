@@ -2,6 +2,7 @@ package jpabook.jpashop.dto.post;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jpabook.jpashop.domain.wish.Likes;
+import jpabook.jpashop.domain.wish.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ public class GetPostDto {
     @Getter
     @Setter
     public static class Post{
+        private User post_user_id;
         private String title;
         private String content;
         private String category;

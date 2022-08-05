@@ -40,6 +40,8 @@ public class PostController {
     @Autowired
     ModelMapper modelMapper;
 
+
+    @ApiOperation(value = "게시글 등록")
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody CreatePostDto.Request reqDto) {
         postService.insertPost(reqDto);
@@ -54,12 +56,15 @@ public class PostController {
         return ResponseEntity.ok().body(postService.getPost(id));
     }
 
+    @ApiOperation(value = "게시글 id별 게시글 조회")
     @PutMapping("/{id}")
     public ResponseEntity<Post> update(@RequestBody UpdatePostDto.Request reqDto, @PathVariable Long id) {
         postService.updatePost(reqDto,id);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+
+    @ApiOperation(value = "게시글 삭제")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         postService.deletePost(id);
@@ -67,6 +72,7 @@ public class PostController {
 
 
 
+    @ApiOperation(value = "게시글 목록 조회")
     @GetMapping("/postList")
     public ResponseEntity<GetPostListDto.Response> getPostList(@RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy)
     {
@@ -78,18 +84,17 @@ public class PostController {
 
     }
 
-/*
-    @PostMapping("/like/{postId}/{userId}")
-    public void likes(@PathVariable Long postId, @PathVariable Long userId){
-        likesService.likes(postId, userId);
-    }
+    @ApiOperation(value = "사용자 id별 게시글들 조회")
+    @GetMapping("/postList/{id}")
+    public ResponseEntity<GetPostListDto.Response> getPostListByUserId(@PathVariable Long id, @RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy)
+    {
+        List<Post> postList =  postService.getPostListByUserId(id, page,size,sortBy);
 
-    @DeleteMapping("/unLike/{postId}/{userId}")
-    public void unLikes(@PathVariable Long postId, @PathVariable Long userId){
-        likesService.unLikes(postId, userId);
-    }
-*/
+        return ResponseEntity.ok().body(GetPostListDto.Response.builder()
+                .postList(postList.stream().map(post -> modelMapper.map(post, GetPostListDto.Post.class)).collect(Collectors.toList()))
+                .build());
 
+    }
 
     @ApiOperation(value = "게시글 좋아요", notes = "좋아요 안되어있을시 좋아요, 좋아요 되어있을시 좋아요 취소")
     @PostMapping("/like")
@@ -108,6 +113,5 @@ public class PostController {
         return ResponseEntity.ok().body(GetPostListDto.Response.builder()
                 .postList(postList.stream().map(post -> modelMapper.map(post, GetPostListDto.Post.class)).collect(Collectors.toList()))
                 .build());
-
     }
 }

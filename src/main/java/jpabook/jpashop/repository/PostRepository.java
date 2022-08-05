@@ -12,6 +12,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "select p from Post p where p.isPrivate = 0")
     Page<Post> findAll(Pageable pageable);
 
+    @Query(value = "select p from Post p where p.post_user_id.userId = :id")
+    Page<Post> findAllByUserId(Long id, Pageable pageable);
+
     // "SELECT m FROM Member m INNER JOIN m.team t WHERE t.name = :teamName";
     // select m from Member m inner join m.team t"
     @Query(value = "select DISTINCT p from Post p INNER JOIN p.likesList l WHERE l.user.userId = :id")
