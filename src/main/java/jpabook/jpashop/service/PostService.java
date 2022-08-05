@@ -87,11 +87,15 @@ public class PostService {
         postRepo.deleteById(id);
     }
 
-    public GetPostDto.Response getPost(Long id) {
+    public GetPostDto.Response getPost(Long id, List<Long> photoId) {
         Post post =  postRepo.findById(id).orElseThrow(()-> new SowonException(Status.NOT_FOUND));
+        //post.setPhotos(photoId);
 
         GetPostDto.Post resPost = modelMapper.map(post, GetPostDto.Post.class);
-        return GetPostDto.Response.builder().post(resPost).build();
+        resPost.setPhotoIdList(photoId);
+
+        return GetPostDto.Response.builder().post(resPost)
+                .build();
     }
 
 

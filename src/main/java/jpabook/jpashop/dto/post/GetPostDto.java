@@ -28,7 +28,7 @@ public class GetPostDto {
         private int viewCount;
         private int likeCount;
         private LocalDateTime createdAt;
-        private List<Photo> photoList;
+        private List<Long> photoIdList;
         private List<Comment> commentList;
     }
 

@@ -57,15 +57,14 @@ public class PostController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GetPostDto.Response> getPost(@PathVariable Long id) {
-        //List<PhotoResponseDTO> photoResponseDtoList = photoService.findAllByPost(id);
-
         List<Photo> photoList = photoRepository.findAllByPostId(id);
+        List<Long> photoId = new ArrayList<>();
 
-//        for(PhotoResponseDTO photoResponseDto : photoResponseDtoList)
-//            photoId.add(photoResponseDto.getFileId());
+        for(Photo photo : photoList) {
+            photoId.add(photo.getId());
+        }
 
-
-        return ResponseEntity.ok().body(postService.getPost(id));
+        return ResponseEntity.ok().body(postService.getPost(id,photoId));
     }
 
     @PutMapping("/{id}")
