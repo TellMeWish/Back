@@ -5,7 +5,6 @@ import jpabook.jpashop.jwt.JwtAuthenticationEntryPoint;
 import jpabook.jpashop.jwt.JwtSecurityConfig;
 import jpabook.jpashop.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -87,7 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/authenticate").permitAll()
                 .antMatchers("/api/signup").permitAll()
 
-                .anyRequest().permitAll() //임시로 권한 풀어놓음
+                .anyRequest().authenticated() //나머지 요청들은 인증해야함
 
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));

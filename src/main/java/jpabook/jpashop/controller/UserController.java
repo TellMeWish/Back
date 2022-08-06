@@ -1,12 +1,10 @@
 package jpabook.jpashop.controller;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import javassist.bytecode.DuplicateMemberException;
-import jpabook.jpashop.domain.wish.User;
-import jpabook.jpashop.dto.UserDTO;
+import jpabook.jpashop.dto.UserDto;
+import jpabook.jpashop.entity.User;
 import jpabook.jpashop.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,13 +24,6 @@ public class UserController {
         this.userService = userService;
     }
 
-
-    @CrossOrigin("*")
-    @GetMapping("/hello")
-    public ResponseEntity<String> hello() {
-        return ResponseEntity.ok("hello");
-    }
-
     @PostMapping("/test-redirect")
     public void testRedirect(HttpServletResponse response) throws IOException {
         response.sendRedirect("/api/user");
@@ -46,7 +37,7 @@ public class UserController {
     @CrossOrigin("*")
     @PostMapping("/signup")
     public ResponseEntity<User> signup(
-            @Valid @RequestBody UserDTO userDto
+            @Valid @RequestBody UserDto userDto
     ) {
         return ResponseEntity.ok(userService.signup(userDto));
     }

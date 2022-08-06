@@ -9,13 +9,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Optional;
 
 public class SecurityUtil {
-
     private static final Logger logger = LoggerFactory.getLogger(SecurityUtil.class);
 
     private SecurityUtil() {
     }
 
-    public static Optional<String> getCurrentUsername() {
+    public static Optional<String> getCurrentUsername() { //Security Context의 Authentication 객체를 이용해 username을 리턴해주는 객체
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null) {
