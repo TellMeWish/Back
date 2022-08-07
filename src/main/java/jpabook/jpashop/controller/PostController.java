@@ -7,16 +7,15 @@ import jpabook.jpashop.repository.PostRepository;
 import jpabook.jpashop.repository.UserRepository;
 import jpabook.jpashop.service.LikesService;
 import jpabook.jpashop.service.PostService;
+import jpabook.jpashop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,6 +29,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
+    private final UserService userService;
     private final LikesService likesService;
 
     @Autowired
@@ -57,12 +57,34 @@ public class PostController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Post> update(@RequestBody UpdatePostDto.Request reqDto, @PathVariable Long id) {
-        postService.updatePost(reqDto,id);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal(); //현재 인증유저 정보 get
+
+        Long postUserid = reqDto.getUserId();
+        String postUsername = userService.getUserByUserId(postUserid).getUsername();
+        String tokenUsername = userDetails.getUsername(); //현재 인증유저의 username get
+
+        System.out.println("tttt" + postUsername + tokenUsername);
+
+        if (postUsername.equals(tokenUsername)) { //게시글 작성자의 name과 현재 토큰의 name을 비교
+            postService.updatePost(reqDto, id);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
+
+//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+//                .getPrincipal(); //현재 인증유저 정보 get
+//
+//        Long postUserid = 10000L; //게시글 userid 어떻게 가져오기 추가 현재는 더미데이터
+//        String postUsername = userService.getUserByUserId(postUserid).getUsername();
+//        String tokenUsername = userDetails.getUsername(); //현재 인증유저의 username get
+//
+//        System.out.println("tttt" + postUsername + tokenUsername);
         postService.deletePost(id);
     }
 

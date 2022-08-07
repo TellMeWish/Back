@@ -16,6 +16,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    public User getUserByUserId(Long id){
+        return userRepository.findUserByUserId(id);
+    }
+
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -52,4 +56,5 @@ public class UserService {
     public Optional<User> getMyUserWithAuthorities() {
         return SecurityUtil.getCurrentUsername().flatMap(userRepository::findOneWithAuthoritiesByUsername);
     }
+
 }
