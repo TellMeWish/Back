@@ -20,15 +20,11 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
-<<<<<<< HEAD
   servlet:
     multipart:
       maxFileSize: 50MB
       maxRequestSize: 50MB
-=======
 
-
->>>>>>> origin/main
 server:
   port: 8081
 

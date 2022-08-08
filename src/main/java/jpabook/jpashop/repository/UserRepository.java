@@ -15,4 +15,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @EntityGraph(attributePaths = "authorities")
     Optional<User> findUserByUsername(String username);
+
+
+//    @Modifying
+//    @Query("select u from User u where u.id = :id")
+//    int updateView(Long id);
+
+//    @Query
+//    //postid를 가지고있는 userid를 찾는다
+//    User findUserBy
 }

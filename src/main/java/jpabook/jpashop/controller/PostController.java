@@ -16,7 +16,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -59,7 +58,7 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-
+    @ApiOperation(value = "게시글 id별 게시글 조회")
     @GetMapping("/{id}")
     public ResponseEntity<GetPostDto.Response> getPost(@PathVariable Long id) {
         List<Photo> photoList = photoRepository.findAllByPostId(id);
@@ -72,28 +71,31 @@ public class PostController {
         return ResponseEntity.ok().body(postService.getPost(id, photoId));
     }
 
-    @ApiOperation(value = "게시글 id별 게시글 조회")
-    @PutMapping("/{id}")
-    public ResponseEntity<Post> update(@RequestBody UpdatePostDto.Request reqDto,
-                @RequestPart(value = "img", required = false) List<MultipartFile> files,
-            @PathVariable Long id) throws Exception {
-
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal(); //현재 인증유저 정보 get
-
-        Long postUserid = reqDto.getUserId();
-        String postUsername = userService.getUserByUserId(postUserid).getUsername();
-        String tokenUsername = userDetails.getUsername(); //현재 인증유저의 username get
-
-        System.out.println("tttt" + postUsername + tokenUsername);
-
-        if (postUsername.equals(tokenUsername)) { //게시글 작성자의 name과 현재 토큰의 name을 비교
-            postService.updatePost(reqDto, id, files);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
-
-    }
+//    @ApiOperation(value = "게시글 수정")
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Post> update(@RequestBody UpdatePostDto.Request reqDto,
+//                @RequestPart(value = "img", required = false) List<MultipartFile> files,
+//            @PathVariable Long id) throws Exception {
+//
+//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+//                .getPrincipal(); //현재 인증유저 정보 get
+//
+//
+//
+//
+//        String tokenUsername = userDetails.getUsername(); //현재 인증유저의 username get
+//
+//        //System.out.println("tttt" + postUsername + tokenUsername);
+//
+//        //postid를 가지고있는 userid를 찾는다
+////
+////        if (postUsername.equals(tokenUsername)) { //게시글 작성자의 name과 현재 토큰의 name을 비교
+////            postService.updatePost(reqDto, id, files);
+////            return ResponseEntity.status(HttpStatus.CREATED).build();
+////        }
+////        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+//
+//    }
 
 
     @ApiOperation(value = "게시글 삭제")
@@ -114,7 +116,7 @@ public class PostController {
 
 
     @ApiOperation(value = "게시글 목록 조회")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/postList")
     public ResponseEntity<GetPostListDto.Response> getPostList(@RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy) {
         List<Post> postList = postService.getPostList(page, size, sortBy);
