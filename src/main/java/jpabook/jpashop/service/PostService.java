@@ -108,9 +108,7 @@ public class PostService {
                 )
         );
 
-        List<Post> postList = pagePost.getContent();
-
-        return postList;
+        return pagePost.getContent();
 
     }
 
