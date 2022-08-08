@@ -1,11 +1,10 @@
 package jpabook.jpashop.service;
-import javassist.bytecode.DuplicateMemberException;
-import jpabook.jpashop.domain.wish.Authority;
-import jpabook.jpashop.domain.wish.User;
-import jpabook.jpashop.dto.UserDTO;
+
+import jpabook.jpashop.dto.UserDto;
+import jpabook.jpashop.entity.Authority;
+import jpabook.jpashop.dto.post.User;
 import jpabook.jpashop.jwt.SecurityUtil;
 import jpabook.jpashop.repository.UserRepository;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,13 +16,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    public User getUserByUserId(Long id){
+        return userRepository.findUserByUserId(id);
+    }
+
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
-    public User signup(UserDTO userDto) {
+    public User signup(UserDto userDto) {
         if (userRepository.findOneWithAuthoritiesByUsername(userDto.getUsername()).orElse(null) != null) {
             //throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
         }
@@ -53,4 +56,5 @@ public class UserService {
     public Optional<User> getMyUserWithAuthorities() {
         return SecurityUtil.getCurrentUsername().flatMap(userRepository::findOneWithAuthoritiesByUsername);
     }
+
 }

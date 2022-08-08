@@ -1,6 +1,7 @@
 package jpabook.jpashop.domain.wish;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jpabook.jpashop.dto.post.User;
 import lombok.*;
 
 import javax.persistence.*;

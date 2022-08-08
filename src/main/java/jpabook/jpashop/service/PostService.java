@@ -4,31 +4,32 @@ import jpabook.jpashop.common.exception.SowonException;
 import jpabook.jpashop.common.exception.Status;
 import jpabook.jpashop.domain.wish.Photo;
 import jpabook.jpashop.domain.wish.Post;
-import jpabook.jpashop.domain.wish.User;
+
 import jpabook.jpashop.dto.PhotoDTO;
 import jpabook.jpashop.dto.post.CreatePostDto;
 import jpabook.jpashop.dto.post.GetPostDto;
 import jpabook.jpashop.dto.post.UpdatePostDto;
 import jpabook.jpashop.repository.PhotoRepository;
+
+
+import jpabook.jpashop.dto.post.User;
+
 import jpabook.jpashop.repository.PostRepository;
 import jpabook.jpashop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @Service

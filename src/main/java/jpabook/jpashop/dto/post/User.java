@@ -1,13 +1,10 @@
-package jpabook.jpashop.domain.wish;
+package jpabook.jpashop.dto.post;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import jpabook.jpashop.entity.Authority;
 import lombok.*;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
-import java.util.Set;
 
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -17,9 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-    //테이블 아이디
 
-    @JsonIgnore
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,14 +23,12 @@ public class User {
     @Column(name = "username", length = 50, unique = true)
     private String username;
 
-    @JsonIgnore
     @Column(name = "password", length = 100)
     private String password;
 
     @Column(name = "nickname", length = 50)
     private String nickname;
 
-    @JsonIgnore
     @Column(name = "activated")
     private boolean activated;
 
@@ -46,5 +39,3 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
 }
-
-

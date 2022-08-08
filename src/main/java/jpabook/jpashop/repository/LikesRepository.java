@@ -1,8 +1,8 @@
 package jpabook.jpashop.repository;
 
-import jpabook.jpashop.domain.wish.Post;
 import jpabook.jpashop.domain.wish.Likes;
-import jpabook.jpashop.domain.wish.User;
+import jpabook.jpashop.domain.wish.Post;
+import jpabook.jpashop.dto.post.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

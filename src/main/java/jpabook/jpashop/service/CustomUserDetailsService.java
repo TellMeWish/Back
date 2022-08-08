@@ -1,6 +1,7 @@
 package jpabook.jpashop.service;
 
-import jpabook.jpashop.domain.wish.User;
+
+import jpabook.jpashop.dto.post.User;
 import jpabook.jpashop.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

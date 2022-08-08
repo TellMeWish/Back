@@ -2,8 +2,7 @@ package jpabook.jpashop.dto.post;
 
 import jpabook.jpashop.domain.wish.Photo;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jpabook.jpashop.domain.wish.Likes;
-import jpabook.jpashop.domain.wish.User;
+
 import lombok.*;
 
 import java.time.LocalDateTime;

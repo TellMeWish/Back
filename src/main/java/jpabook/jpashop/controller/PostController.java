@@ -10,11 +10,15 @@ import jpabook.jpashop.repository.UserRepository;
 import jpabook.jpashop.service.LikesService;
 import jpabook.jpashop.service.PhotoService;
 import jpabook.jpashop.service.PostService;
+import jpabook.jpashop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,7 +34,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
+
     private final PhotoService photoService;
+
+    private final UserService userService;
+
     private final LikesService likesService;
 
     @Autowired
@@ -66,22 +74,47 @@ public class PostController {
 
     @ApiOperation(value = "게시글 id별 게시글 조회")
     @PutMapping("/{id}")
-    public ResponseEntity<Post> update(@RequestPart(value = "dto") UpdatePostDto.Request reqDto,
-                                       @RequestPart(value = "img", required = false) List<MultipartFile> files,
-                                       @PathVariable Long id) throws Exception {
-        postService.updatePost(reqDto, id, files);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<Post> update(@RequestBody UpdatePostDto.Request reqDto,
+                @RequestPart(value = "img", required = false) List<MultipartFile> files,
+            @PathVariable Long id) throws Exception {
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal(); //현재 인증유저 정보 get
+
+        Long postUserid = reqDto.getUserId();
+        String postUsername = userService.getUserByUserId(postUserid).getUsername();
+        String tokenUsername = userDetails.getUsername(); //현재 인증유저의 username get
+
+        System.out.println("tttt" + postUsername + tokenUsername);
+
+        if (postUsername.equals(tokenUsername)) { //게시글 작성자의 name과 현재 토큰의 name을 비교
+            postService.updatePost(reqDto, id, files);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+
     }
 
 
     @ApiOperation(value = "게시글 삭제")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal(); //현재 인증유저 정보 get
+//
+//        Long postUserid = 10000L; //게시글 userid 어떻게 가져오기 추가 현재는 더미데이터
+//        String postUsername = userService.getUserByUserId(postUserid).getUsername();
+//        String tokenUsername = userDetails.getUsername(); //현재 인증유저의 username get
+//
+//        System.out.println("tttt" + postUsername + tokenUsername);
         postService.deletePost(id);
     }
 
 
+
     @ApiOperation(value = "게시글 목록 조회")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/postList")
     public ResponseEntity<GetPostListDto.Response> getPostList(@RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy) {
         List<Post> postList = postService.getPostList(page, size, sortBy);

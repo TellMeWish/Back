@@ -1,4 +1,4 @@
-package jpabook.jpashop.domain.wish;
+package jpabook.jpashop.entity;
 
 import lombok.*;
 
