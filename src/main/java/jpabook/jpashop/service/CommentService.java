@@ -25,8 +25,8 @@ public class CommentService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void addComment(AddCommentDto.Request reqDto) {
-        User user = userRepository.findById(reqDto.getUserId()).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
+    public void addComment(Long userId, AddCommentDto.Request reqDto) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
         Post post = postRepository.findById(reqDto.getPostId()).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
 
         Comment c = null;
@@ -53,14 +53,22 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
-    public void deleteComment(Long id) {
+    public void deleteComment(Long userId, Long id) {
       /*  Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new RuntimeException("없는 댓글 아이디"));
 */
+        Comment comment = commentRepository.findById(id).orElseThrow(() ->new IllegalArgumentException("해당 댓글이 존재하지 않습니다. " + id));
+        if(!comment.getUser().getUserId().equals(userId)){
+            throw new SowonException(Status.ACCESS_DENIED);
+        }
         commentRepository.deleteById(id);
     }
 
-    public void updateComment(UpdateCommentDto.Request reqDto, Long id) {
+    public void updateComment(Long userId, UpdateCommentDto.Request reqDto, Long id) {
         Comment comment = commentRepository.findById(id).orElseThrow(() ->new IllegalArgumentException("해당 댓글이 존재하지 않습니다. " + id));
+
+        if(!comment.getUser().getUserId().equals(userId)){
+            throw new SowonException(Status.ACCESS_DENIED);
+        }
 
         comment.setContent(reqDto.getContent());
         comment.setSecret(reqDto.getSecret());

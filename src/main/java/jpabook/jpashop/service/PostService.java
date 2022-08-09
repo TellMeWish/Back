@@ -55,14 +55,16 @@ public class PostService {
             }
         }
         post.setPhotos(photoList);
-
         post.setPost_user_id(user);
         postRepo.save(post);
     }
 
 
-    public void updatePost(UpdatePostDto.Request reqDto, Long id, List<MultipartFile> multipartFileList) throws Exception {
+    public void updatePost(UpdatePostDto.Request reqDto, Long id, List<MultipartFile> multipartFileList, Long userId) throws Exception {
         Post findPost = postRepo.findById(id).get();
+        if(!findPost.getPost_user_id().getUserId().equals(userId)){
+            throw new SowonException(Status.ACCESS_DENIED);
+        }
 
         findPost.setContent(reqDto.getContent());
         findPost.setTitle(reqDto.getTitle());
@@ -79,12 +81,19 @@ public class PostService {
         }
         //findPost.setPhotos(photoList);
 
-
         postRepo.save(findPost);
     }
 
-    public void deletePost(Long id) {
-        postRepo.deleteById(id);
+    public void deletePost(Long id, Long userId) {
+
+        Post findPost = postRepo.findById(id).get();
+
+        if(!findPost.getPost_user_id().getUserId().equals(userId)){
+            throw new SowonException(Status.ACCESS_DENIED);
+        }
+
+        postRepo.delete(findPost);
+
     }
 
     public GetPostDto.Response getPost(Long id, List<Long> photoId) {
@@ -124,15 +133,14 @@ public class PostService {
         );
 
         List<Post> postList = pagePost.getContent();
-
         return postList;
 
     }
 
 
-    public List<Post> getLikedPostList(Long id, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
+    public List<Post> getLikedPostList(Long userId, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
 
-        Page<Post> pagePost = postRepo.findLikedPostById(id,
+        Page<Post> pagePost = postRepo.findLikedPostById(userId,
                 PageRequest.of(
                         page.orElse(0),
                         size.orElse(30),

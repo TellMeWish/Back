@@ -7,7 +7,6 @@ public class UpdatePostDto {
     @Getter
     @Setter
     public static class Request{
-        private Long userId;
         private String content;
         private String title;
         private String category;

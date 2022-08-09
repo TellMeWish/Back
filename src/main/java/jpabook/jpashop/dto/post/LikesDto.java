@@ -9,7 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 public class LikesDto {
     private Long postId;
-    private Long userId;
 }
 
 

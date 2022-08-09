@@ -23,16 +23,16 @@ public class LikesService {
     private final PostRepository postRepository;
 
     @Transactional
-    public void likes(LikesDto likesDto){
+    public void likes(Long userId, LikesDto likesDto){
 
-        User user = userRepository.findById(likesDto.getUserId()).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
+        User user = userRepository.findById(userId).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
         Post post = postRepository.findById(likesDto.getPostId()).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
 
 
         // 이미 좋아요 된 글일 경우
-        if (findLikesByPostAndUser(likesDto).isPresent()) {
+        if (findLikesByPostAndUser(userId, likesDto).isPresent()) {
             /*throw new SowonException("이미 좋아요 된 글입니다.");*/
-            Optional<Likes> likesOptional = findLikesByPostAndUser(likesDto);
+            Optional<Likes> likesOptional = findLikesByPostAndUser(userId, likesDto);
             if (likesOptional.isEmpty()) {
                 throw new SowonException("좋아요가 존재하지 않습니다.");
             }
@@ -58,9 +58,9 @@ public class LikesService {
     }
 */
 
-    public Optional<Likes> findLikesByPostAndUser(LikesDto likesDto) {
+    public Optional<Likes> findLikesByPostAndUser(Long userId, LikesDto likesDto) {
 
-        User user = userRepository.findById(likesDto.getUserId()).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
+        User user = userRepository.findById(userId).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
         Post post = postRepository.findById(likesDto.getPostId()).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
 
         return likesRepository
