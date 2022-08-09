@@ -4,28 +4,32 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
  * GenericFilterBean을 extends해서 doFilter Override, 실제 필터링 로직은 doFilter 내부에 작성
  */
 
-public class JwtFilter extends GenericFilterBean {
+@Component
+public class JwtFilter extends OncePerRequestFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
-    private TokenProvider tokenProvider;
 
+    private TokenProvider tokenProvider;
     public JwtFilter(TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
     }
@@ -35,8 +39,7 @@ public class JwtFilter extends GenericFilterBean {
      * jwt 토큰의 인증정보를 SecurityContext에 저장하는 역할 수행
      */
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-            throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest servletRequest, HttpServletResponse servletResponse, FilterChain filterChain) throws ServletException, IOException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         String jwt = resolveToken(httpServletRequest); // Request에서 토큰을 받음
         String requestURI = httpServletRequest.getRequestURI();

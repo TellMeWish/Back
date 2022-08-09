@@ -1,6 +1,7 @@
 package jpabook.jpashop.service;
 
 
+import jpabook.jpashop.domain.wish.CustomUserDetails;
 import jpabook.jpashop.dto.post.User;
 import jpabook.jpashop.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
-    public CustomUserDetailsService(UserRepository userRepository) {
+    public   CustomUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -30,15 +31,16 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
     }
 
-    private org.springframework.security.core.userdetails.User createUser(String username, User user) {
+    private CustomUserDetails createUser(String username, User user) {
         if (!user.isActivated()) {
             throw new RuntimeException(username + " -> 활성화되어 있지 않습니다.");
         }
         List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityName()))
                 .collect(Collectors.toList());
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+        return new CustomUserDetails(user.getUsername(),
                 user.getPassword(),
-                grantedAuthorities);
+                grantedAuthorities,
+                user.getUserId());
     }
 }

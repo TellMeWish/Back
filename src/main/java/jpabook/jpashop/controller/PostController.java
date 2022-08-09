@@ -1,9 +1,11 @@
 package jpabook.jpashop.controller;
 
 import io.swagger.annotations.ApiOperation;
+import jpabook.jpashop.domain.wish.CustomUserDetails;
 import jpabook.jpashop.domain.wish.Photo;
 import jpabook.jpashop.domain.wish.Post;
 import jpabook.jpashop.dto.post.*;
+import jpabook.jpashop.jwt.JwtFilter;
 import jpabook.jpashop.repository.PhotoRepository;
 import jpabook.jpashop.repository.PostRepository;
 import jpabook.jpashop.repository.UserRepository;
@@ -16,6 +18,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -53,8 +56,9 @@ public class PostController {
     @ApiOperation(value = "게시글 등록")
     @PostMapping
     public ResponseEntity<Void> create(@RequestPart(value = "img", required = false) List<MultipartFile> files,
-                                       @RequestPart(value = "dto") CreatePostDto.Request reqDto) throws Exception {
-        postService.insertPost(reqDto, files);
+                                       @RequestPart(value = "dto") CreatePostDto.Request reqDto,
+                                       @AuthenticationPrincipal CustomUserDetails user) throws Exception {
+        postService.insertPost(reqDto, files, user.getId());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -71,31 +75,33 @@ public class PostController {
         return ResponseEntity.ok().body(postService.getPost(id, photoId));
     }
 
-//    @ApiOperation(value = "게시글 수정")
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Post> update(@RequestBody UpdatePostDto.Request reqDto,
-//                @RequestPart(value = "img", required = false) List<MultipartFile> files,
-//            @PathVariable Long id) throws Exception {
-//
-//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
-//                .getPrincipal(); //현재 인증유저 정보 get
-//
-//
-//
-//
-//        String tokenUsername = userDetails.getUsername(); //현재 인증유저의 username get
-//
-//        //System.out.println("tttt" + postUsername + tokenUsername);
-//
-//        //postid를 가지고있는 userid를 찾는다
-////
-////        if (postUsername.equals(tokenUsername)) { //게시글 작성자의 name과 현재 토큰의 name을 비교
-////            postService.updatePost(reqDto, id, files);
-////            return ResponseEntity.status(HttpStatus.CREATED).build();
-////        }
-////        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
-//
-//    }
+  /*  @ApiOperation(value = "게시글 수정")
+    @PutMapping("/{id}")
+    public ResponseEntity<Post> update(@RequestBody UpdatePostDto.Request reqDto,
+                @RequestPart(value = "img", required = false) List<MultipartFile> files,
+            @PathVariable Long id) throws Exception {
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal(); //현재 인증유저 정보 get
+
+
+
+
+        String tokenUsername = userDetails.getUsername(); //현재 인증유저의 username get
+
+
+
+       // System.out.println("tttt" + postUsername + tokenUsername);
+
+        //postid를 가지고있는 userid를 찾는다
+
+        if (postUsername.equals(tokenUsername)) { //게시글 작성자의 name과 현재 토큰의 name을 비교
+            postService.updatePost(reqDto, id, files);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+
+    }*/
 
 
     @ApiOperation(value = "게시글 삭제")

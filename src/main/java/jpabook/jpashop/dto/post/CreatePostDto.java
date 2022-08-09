@@ -17,7 +17,6 @@ public class CreatePostDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Request{
-        private Long userId;//로그인 사용자 PK
         private String content; //댓글내용
         private String title;
         private String category;

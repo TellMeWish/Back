@@ -4,6 +4,7 @@ package jpabook.jpashop.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jpabook.jpashop.domain.wish.CustomUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -59,8 +60,10 @@ public class TokenProvider implements InitializingBean {
         long now = (new Date()).getTime();
         Date validity = new Date(now + this.tokenValidityInMilliseconds); // 토큰 만료기간
 
+        CustomUserDetails user = (CustomUserDetails)(authentication.getPrincipal());
         return Jwts.builder()
                 .setSubject(authentication.getName())
+                .claim("userId", user.getId())
                 .claim(AUTHORITIES_KEY, authorities)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setExpiration(validity)
@@ -84,7 +87,7 @@ public class TokenProvider implements InitializingBean {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        User principal = new User(claims.getSubject(), "", authorities);
+        CustomUserDetails principal = new CustomUserDetails(claims.getSubject(), "", authorities,Long.parseLong(String.valueOf(claims.get("userId"))));
 
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }

@@ -42,8 +42,8 @@ public class PostService {
 
 
     @Transactional
-    public void insertPost(CreatePostDto.Request reqDto, List<MultipartFile> files) throws Exception {
-        User user = userRepo.findById(reqDto.getUserId()).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
+    public void insertPost(CreatePostDto.Request reqDto, List<MultipartFile> files, Long userId) throws Exception {
+        User user = userRepo.findById(userId).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
         Post post = modelMapper.map(reqDto, Post.class);
 
 

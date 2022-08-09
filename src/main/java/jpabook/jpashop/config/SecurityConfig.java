@@ -1,9 +1,6 @@
 package jpabook.jpashop.config;
 
-import jpabook.jpashop.jwt.JwtAccessDeniedHandler;
-import jpabook.jpashop.jwt.JwtAuthenticationEntryPoint;
-import jpabook.jpashop.jwt.JwtSecurityConfig;
-import jpabook.jpashop.jwt.TokenProvider;
+import jpabook.jpashop.jwt.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,16 +25,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
+    private final JwtFilter jwtFilter;
+
     public SecurityConfig(
             TokenProvider tokenProvider,
             CorsFilter corsFilter,
             JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-            JwtAccessDeniedHandler jwtAccessDeniedHandler
+            JwtAccessDeniedHandler jwtAccessDeniedHandler,
+            JwtFilter jwtFilter
     ) {
         this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
+        this.jwtFilter = jwtFilter;
     }
 
     @Bean
@@ -61,8 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
                 .csrf().disable()
-
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
 
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
@@ -90,5 +89,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
+        httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
