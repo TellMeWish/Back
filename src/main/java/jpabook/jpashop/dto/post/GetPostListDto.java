@@ -38,6 +38,20 @@ public class GetPostListDto {
 
     @Getter
     @Setter
+    public static class User{
+        private String username;
+        private String nickname;
+    }
+
+    @Getter
+    @Setter
+    public static class Location{
+        private float latitude;
+        private float longitude;
+    }
+
+    @Getter
+    @Setter
     public static class Comment {
         private Long id;
         private String content;

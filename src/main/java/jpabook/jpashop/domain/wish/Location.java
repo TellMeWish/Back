@@ -20,6 +20,6 @@ public class Location {
 
     private float longitude;
 
-    @OneToOne(mappedBy = "location", fetch=LAZY)
+    @OneToOne(mappedBy = "location")
     private Post post;
 }

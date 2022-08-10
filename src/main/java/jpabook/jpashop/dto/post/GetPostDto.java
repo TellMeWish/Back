@@ -1,6 +1,5 @@
 package jpabook.jpashop.dto.post;
 
-import jpabook.jpashop.domain.wish.Photo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.*;
@@ -30,12 +29,27 @@ public class GetPostDto {
         private int isParticipate;
         private int viewCount;
         private int likeCount;
+        private Location location;
        //private List<Likes> likesList;
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private LocalDateTime createdAt;
         private List<Long> photoIdList;
         private List<Comment> commentList;
+    }
+
+    @Getter
+    @Setter
+    public static class User{
+        private String username;
+        private String nickname;
+    }
+
+    @Getter
+    @Setter
+    public static class Location{
+        private float latitude;
+        private float longitude;
     }
 
     @Getter

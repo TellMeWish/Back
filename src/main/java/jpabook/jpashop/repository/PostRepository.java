@@ -25,6 +25,4 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("update Post p set p.viewCount = p.viewCount + 1 where p.id = :id")
     int updateView(Long id);
 
-    //postid로 user를 찾는다
-
 }

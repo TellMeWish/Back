@@ -1,6 +1,7 @@
 package jpabook.jpashop.dto.post;
 
 
+import jpabook.jpashop.domain.wish.Location;
 import jpabook.jpashop.domain.wish.Photo;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +24,14 @@ public class CreatePostDto {
         private Integer isParticipate;
         private Integer isPrivate;
         private List<MultipartFile> files;
+        private Location location;
+    }
+
+    @Getter
+    @Setter
+    public static class Location{
+        private float latitude;
+        private float longitude;
     }
 
     public static class Response{

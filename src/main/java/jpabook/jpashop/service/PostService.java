@@ -2,6 +2,7 @@ package jpabook.jpashop.service;
 
 import jpabook.jpashop.common.exception.SowonException;
 import jpabook.jpashop.common.exception.Status;
+import jpabook.jpashop.domain.wish.Location;
 import jpabook.jpashop.domain.wish.Photo;
 import jpabook.jpashop.domain.wish.Post;
 
@@ -9,6 +10,7 @@ import jpabook.jpashop.dto.PhotoDTO;
 import jpabook.jpashop.dto.post.CreatePostDto;
 import jpabook.jpashop.dto.post.GetPostDto;
 import jpabook.jpashop.dto.post.UpdatePostDto;
+import jpabook.jpashop.repository.LocationRepository;
 import jpabook.jpashop.repository.PhotoRepository;
 
 
@@ -37,6 +39,7 @@ import java.util.Optional;
 public class PostService {
     private final PostRepository postRepo;
     private final UserRepository userRepo;
+    private final LocationRepository locationRepo;
     private final ModelMapper modelMapper;
     private final PhotoRepository photoRepo;
 
@@ -46,6 +49,10 @@ public class PostService {
         User user = userRepo.findById(userId).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
         Post post = modelMapper.map(reqDto, Post.class);
 
+        Location location = new Location();
+        location.setPost(post);
+        location.setLatitude(reqDto.getLocation().getLatitude());
+        location.setLongitude(reqDto.getLocation().getLongitude());
 
         //다중파일처리
         List<Photo> photoList = FileHandler.parseFileInfo(post, files);
@@ -56,6 +63,7 @@ public class PostService {
         }
         post.setPhotos(photoList);
         post.setPost_user_id(user);
+        post.setLocation(location);
         postRepo.save(post);
     }
 
