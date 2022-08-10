@@ -5,6 +5,7 @@ import jpabook.jpashop.dto.post.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -43,6 +44,11 @@ public class Post extends BaseTimeEntity{
     //참여 미참여
     @Column(name="is_Participate", columnDefinition = "TINYINT")
     private int isParticipate;
+
+//    //진행상태 ( 예정 = 0, 진행중 = 1, 완료 = 2 )
+//    @ColumnDefault("0")
+//    @Column(name="is_progress")
+//    private int isProgress;
 
     @Column(name="view_count")
     private int viewCount;

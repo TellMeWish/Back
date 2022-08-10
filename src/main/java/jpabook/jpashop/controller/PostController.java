@@ -79,7 +79,7 @@ public class PostController {
 
     @ApiOperation(value = "게시글 수정")
     @PutMapping("/{id}")
-    public ResponseEntity<Post> update(@RequestBody UpdatePostDto.Request reqDto,
+    public ResponseEntity<Post> update(@RequestPart(value = "dto") UpdatePostDto.Request reqDto,
                                        @RequestPart(value = "img", required = false) List<MultipartFile> files,
                                        @AuthenticationPrincipal CustomUserDetails user,
                                        @PathVariable Long id) throws Exception {
