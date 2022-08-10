@@ -55,7 +55,7 @@ public class GetPostListDto {
     public static class Comment {
         private Long id;
         private String content;
-        private String userName;
+        private User user;
         private Boolean secret;
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
