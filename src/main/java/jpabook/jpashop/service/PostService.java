@@ -145,6 +145,23 @@ public class PostService {
 
     }
 
+    public List<Post> getPostListByKeyword(String keyword, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
+
+        Page<Post> pagePost = postRepo.findPostsByKeyword(
+                keyword,
+                PageRequest.of(
+                        page.orElse(0),
+                        size.orElse(30),
+                        Sort.Direction.DESC, sortBy.orElse("id")
+                )
+        );
+
+        List<Post> postList = pagePost.getContent();
+        return postList;
+
+    }
+
+
 
     public List<Post> getLikedPostList(Long userId, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
 
