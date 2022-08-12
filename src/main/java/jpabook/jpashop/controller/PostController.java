@@ -118,7 +118,7 @@ public class PostController {
         List<Post> postList = postService.getPostListByUserId(user.getId(), page, size, sortBy);
 
         return ResponseEntity.ok().body(GetPostListDto.Response.builder()
-                .postList(postList.stream().map(post -> modelMapper.map(post, GetPostListDto.Post.class)).collect(Collectors.toList()))
+                .postList(postService.getPostListDtoWithPhotoIdSetting(postList))
                 .build());
 
     }
@@ -137,7 +137,7 @@ public class PostController {
         List<Post> postList = postService.getLikedPostList(user.getId(), page, size, sortBy);
 
         return ResponseEntity.ok().body(GetPostListDto.Response.builder()
-                .postList(postList.stream().map(post -> modelMapper.map(post, GetPostListDto.Post.class)).collect(Collectors.toList()))
+                .postList(postService.getPostListDtoWithPhotoIdSetting(postList))
                 .build());
     }
 }
