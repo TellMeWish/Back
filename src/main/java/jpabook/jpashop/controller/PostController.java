@@ -120,7 +120,16 @@ public class PostController {
         return ResponseEntity.ok().body(GetPostListDto.Response.builder()
                 .postList(postService.getPostListDtoWithPhotoIdSetting(postList))
                 .build());
+    }
 
+    @ApiOperation(value = "게시글 검색") //카테고리 검색은 곧 추가
+    @PostMapping("/search")
+    public ResponseEntity<GetPostListDto.Response> getPostListByKeyword(@RequestParam String keyword, @RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy) {
+        List<Post> postList = postService.getPostListByKeyword(keyword, page, size, sortBy);
+
+        return ResponseEntity.ok().body(GetPostListDto.Response.builder()
+                .postList(postService.getPostListDtoWithPhotoIdSetting(postList))
+                .build());
     }
 
     @ApiOperation(value = "게시글 좋아요", notes = "좋아요 안되어있을시 좋아요, 좋아요 되어있을시 좋아요 취소")
