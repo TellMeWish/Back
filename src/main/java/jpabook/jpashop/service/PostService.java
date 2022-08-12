@@ -7,14 +7,10 @@ import jpabook.jpashop.domain.wish.Photo;
 import jpabook.jpashop.domain.wish.Post;
 
 import jpabook.jpashop.dto.PhotoDTO;
-import jpabook.jpashop.dto.post.CreatePostDto;
-import jpabook.jpashop.dto.post.GetPostDto;
-import jpabook.jpashop.dto.post.UpdatePostDto;
+import jpabook.jpashop.dto.post.*;
 import jpabook.jpashop.repository.LocationRepository;
 import jpabook.jpashop.repository.PhotoRepository;
 
-
-import jpabook.jpashop.dto.post.User;
 
 import jpabook.jpashop.repository.PostRepository;
 import jpabook.jpashop.repository.UserRepository;
@@ -33,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -128,6 +125,25 @@ public class PostService {
 
         return pagePost.getContent();
 
+    }
+
+    public List<GetPostListDto.Post> getPostListDtoWithPhotoIdSetting(List<Post> postList) {
+
+        List<GetPostListDto.Post> resPostList = postList.stream()
+                .map(post -> modelMapper.map(post, GetPostListDto.Post.class))
+                .collect(Collectors.toList());
+        Long plID = 0L;
+
+        for(int i =0; i < postList.size(); i++) {
+            if(!postList.get(i).getPhotos().isEmpty())  //첨부파일 존재
+                plID = postList.get(i).getPhotos().get(0).getId();
+            else
+                plID = 0L;
+
+            resPostList.get(i).setPhotoId(plID);
+        }
+
+        return resPostList;
     }
 
     public List<Post> getPostListByUserId(Long id, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {

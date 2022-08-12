@@ -61,7 +61,7 @@ public class PostController {
                                        @RequestPart(value = "dto") CreatePostDto.Request reqDto,
                                        @AuthenticationPrincipal CustomUserDetails user) throws Exception {
         postService.insertPost(reqDto, files, user.getId());
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @ApiOperation(value = "게시글 id별 게시글 조회")
@@ -87,7 +87,7 @@ public class PostController {
 
         postService.updatePost(reqDto, id, files, user.getId());
 
-        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
 
     }
 
@@ -107,7 +107,7 @@ public class PostController {
         List<Post> postList = postService.getPostList(page, size, sortBy);
 
         return ResponseEntity.ok().body(GetPostListDto.Response.builder()
-                .postList(postList.stream().map(post -> modelMapper.map(post, GetPostListDto.Post.class)).collect(Collectors.toList()))
+                .postList(postService.getPostListDtoWithPhotoIdSetting(postList))
                 .build());
 
     }

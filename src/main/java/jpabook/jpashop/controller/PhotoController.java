@@ -37,21 +37,24 @@ public class PhotoController {
 
         if(id != 0) {
             Photo photo = photoRepo.findById(id).orElseThrow(()
-                    -> new IllegalArgumentException("파일이 존재하지 않습니다"));
+                    -> new IllegalArgumentException("파일이 존재하지 않습니다. ( 0 or 존재하는 photoID 입력 )"));
             path = photo.getFileUrl();
         }
         else {
             String thumbnailFolderPath = "images" + File.separator + "thumbnail" + File.separator;
             path = thumbnailFolderPath + "thumbnail.png";
 
-            //썸네일 디렉토리 생성
-            File file = new File(thumbnailFolderPath );
+            //썸네일 디렉토리가 없을시 새로 생성
+            File file = new File(thumbnailFolderPath);
             boolean isDirectoryCreated = file.exists();
             if (!isDirectoryCreated) {
                 Files.createDirectories(file.toPath());
 
             }
         }
+
+        System.out.println("당신의 패스는? : " + path);
+
 
         InputStream imageStream = new FileInputStream(absolutePath + path);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);

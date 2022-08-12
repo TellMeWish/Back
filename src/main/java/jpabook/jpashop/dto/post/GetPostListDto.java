@@ -32,7 +32,7 @@ public class GetPostListDto {
         //private List<Likes> likesList;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private LocalDateTime createdAt;
-        private List<Long> photoIdList;
+        private Long photoId;                     //썸네일용 대표 이미지 아이디 하나를 받아온다
         private List<GetPostDto.Comment> commentList;
     }
 
