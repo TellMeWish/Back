@@ -124,8 +124,8 @@ public class PostController {
 
     @ApiOperation(value = "게시글 검색") //카테고리 검색은 곧 추가
     @PostMapping("/search")
-    public ResponseEntity<GetPostListDto.Response> getPostListByKeyword(@RequestParam String keyword, @RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy) {
-        List<Post> postList = postService.getPostListByKeyword(keyword, page, size, sortBy);
+    public ResponseEntity<GetPostListDto.Response> getPostListByKeyword(@RequestParam(defaultValue = "all", required = false) String category, @RequestParam(defaultValue = "") String keyword, @RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy) {
+        List<Post> postList = postService.getPostListByKeyword(category, keyword, page, size, sortBy);
 
         return ResponseEntity.ok().body(GetPostListDto.Response.builder()
                 .postList(postService.getPostListDtoWithPhotoIdSetting(postList))
