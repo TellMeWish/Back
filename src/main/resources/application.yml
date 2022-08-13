@@ -22,8 +22,8 @@ spring:
         show_sql: true
   servlet:
     multipart:
-      maxFileSize: 50MB
-      maxRequestSize: 50MB
+      maxFileSize: 100MB
+      maxRequestSize: 100MB
 
 server:
   port: 8081

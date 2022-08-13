@@ -27,6 +27,7 @@ public class GetPostListDto {
         private int isPrivate;
         private int isCompleted;
         private int isParticipate;
+        private int isProgress;
         private int viewCount;
         private int likeCount;
         //private List<Likes> likesList;

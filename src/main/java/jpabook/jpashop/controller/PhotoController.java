@@ -2,6 +2,7 @@ package jpabook.jpashop.controller;
 
 import jpabook.jpashop.domain.wish.Photo;
 import jpabook.jpashop.dto.PhotoDTO;
+import jpabook.jpashop.dto.PhotoResponseDTO;
 import jpabook.jpashop.repository.PhotoRepository;
 import jpabook.jpashop.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -79,6 +80,10 @@ public class PhotoController {
         InputStream imageStream = new FileInputStream(absolutePath + path);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
         imageStream.close();
+
+//        PhotoResponseDTO photoDTO = new PhotoResponseDTO();
+//        photoDTO.setData(imageByteArray);
+
 
         return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
     }

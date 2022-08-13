@@ -45,10 +45,10 @@ public class Post extends BaseTimeEntity{
     @Column(name="is_Participate", columnDefinition = "TINYINT")
     private int isParticipate;
 
-//    //진행상태 ( 예정 = 0, 진행중 = 1, 완료 = 2 )
-//    @ColumnDefault("0")
-//    @Column(name="is_progress")
-//    private int isProgress;
+    //진행상태 ( 예정 = 0, 진행중 = 1, 완료 = 2 )
+    @ColumnDefault("0")
+    @Column(name="is_progress")
+    private int isProgress;
 
     @Column(name="view_count")
     private int viewCount;

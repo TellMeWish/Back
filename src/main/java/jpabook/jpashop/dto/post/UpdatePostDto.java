@@ -13,6 +13,7 @@ public class UpdatePostDto {
         private int isParticipate;
         private int isPrivate;
         private int isCompleted;
+        private int isProgress;
     }
 
     public static class Response{

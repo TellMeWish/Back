@@ -76,6 +76,7 @@ public class PostService {
         findPost.setCategory(reqDto.getCategory());
         findPost.setIsParticipate(reqDto.getIsParticipate());
         findPost.setIsPrivate(reqDto.getIsPrivate());
+        findPost.setIsProgress(reqDto.getIsProgress());
         //Post post = modelMapper.map(reqDto, Post.class);
 
         //파일처리
