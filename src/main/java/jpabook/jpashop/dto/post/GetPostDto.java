@@ -27,6 +27,7 @@ public class GetPostDto {
         private int isPrivate;
         private int isCompleted;
         private int isParticipate;
+        private int isProgress;
         private int viewCount;
         private int likeCount;
         private Location location;

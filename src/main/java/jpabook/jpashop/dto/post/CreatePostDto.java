@@ -25,6 +25,7 @@ public class CreatePostDto {
         private Integer isPrivate;
         private List<MultipartFile> files;
         private Location location;
+        private int isProgress;
     }
 
     @Getter
