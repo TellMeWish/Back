@@ -75,7 +75,7 @@ public class PostService {
         findPost.setCategory(reqDto.getCategory());
         findPost.setIsParticipate(reqDto.getIsParticipate());
         findPost.setIsPrivate(reqDto.getIsPrivate());
-        //findPost.setIsProgress(reqDto.getIsProgress());
+        findPost.setIsProgress(reqDto.getIsProgress());
         //Post post = modelMapper.map(reqDto, Post.class);
 
         //파일처리
@@ -219,7 +219,6 @@ public class PostService {
 
         if (CollectionUtils.isEmpty(dbPhotoList)) { // DB에 아예 존재 x
             if (!CollectionUtils.isEmpty(oldMultiFileList)) { // 전달되어온 파일이 하나라도 존재
-                // 저장할 파일 목록에 추가
                 newFileList.addAll(oldMultiFileList);
             }
         } else {  // DB에 한 장 이상 존재
@@ -228,13 +227,8 @@ public class PostService {
                 for (Photo dbPhoto : dbPhotoList)
                     photoRepo.deleteById(dbPhoto.getId());
             } else {  // 전달되어온 파일 한 장 이상 존재
-
-                // DB에 저장되어있는 파일 원본명 목록
                 List<String> dbOriginNameList = new ArrayList<>();
-
-                // DB의 파일 원본명 추출
                 for (Photo dbPhoto : dbPhotoList) {
-                    // file id로 DB에 저장된 파일 정보 얻어오기
                     Photo entity = photoRepo.findById(dbPhoto.getId()).orElseThrow(()
                             -> new IllegalArgumentException("파일이 존재하지 않습니다"));
 
@@ -243,21 +237,20 @@ public class PostService {
                             .fileUrl(entity.getFileUrl())
                             .fileSize(entity.getFileSize())
                             .build();
-                    // DB의 파일 원본명 얻어오기
+
                     String dbOriFileName = dbPhotoDto.getFileOriName();
 
 
-                    if (!oldMultiFileList.contains(dbOriFileName))  // 서버에 저장된 파일들 중 전달되어온 파일이 존재하지 않는다면
-                        photoRepo.deleteById(dbPhoto.getId());  // 파일 삭제
-                    else  // 그것도 아니라면
-                        dbOriginNameList.add(dbOriFileName);    // DB에 저장할 파일 목록에 추가
+                    if (!oldMultiFileList.contains(dbOriFileName))
+                        photoRepo.deleteById(dbPhoto.getId());
+                    else
+                        dbOriginNameList.add(dbOriFileName);
                 }
 
-                for (MultipartFile multipartFile : oldMultiFileList) { // 전달되어온 파일 하나씩 검사
-                    // 파일의 원본명 얻어오기
+                for (MultipartFile multipartFile : oldMultiFileList) {
                     String multipartOrigName = multipartFile.getOriginalFilename();
-                    if (!dbOriginNameList.contains(multipartOrigName)) {   // DB에 없는 파일이면
-                        newFileList.add(multipartFile); // DB에 저장할 파일 목록에 추가
+                    if (!dbOriginNameList.contains(multipartOrigName)) {
+                        newFileList.add(multipartFile);
                     }
                 }
             }
