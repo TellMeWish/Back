@@ -105,13 +105,15 @@ public class PostService {
         Post post = postRepo.findById(id).orElseThrow(() -> new SowonException(Status.NOT_FOUND));
         //post.setPhotos(photoId);
         // 해당 유저가 해당 포스트에 좋아요 했는지
-
-
         Optional<Likes> likesOptional = likesRepo.findByPostAndUserUserId(post, userId);
+
+        //해당 유저의 포스트인지
+        Optional<Post> postOptional = postRepo.findByPostAndUserId(id, userId);
 
         GetPostDto.Post resPost = modelMapper.map(post, GetPostDto.Post.class);
         resPost.setPhotoIdList(photoId);
         resPost.setIsLike(likesOptional.isPresent());
+        resPost.setIsMyPost(postOptional.isPresent());
 
         return GetPostDto.Response.builder().post(resPost)
                 .build();

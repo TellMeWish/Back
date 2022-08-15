@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query(value = "select p from Post p where p.isPrivate = 0")
@@ -23,6 +25,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query(value = "select DISTINCT p from Post p INNER JOIN p.likesList l WHERE l.user.userId = :id")
     Page<Post> findLikedPostById(Long id, Pageable pageable);
+
+    @Query(value = "select p from Post p where p.post_user_id.userId = :userId and p.id = :postId")
+    Optional<Post> findByPostAndUserId(Long postId, Long userId);
 
 
     @Modifying
