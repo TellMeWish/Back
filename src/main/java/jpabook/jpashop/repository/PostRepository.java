@@ -21,8 +21,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "select p from Post p where p.category = :category and p.title LIKE CONCAT('%',:keyword,'%')")
     Page<Post> findPostsByKeywordCategory(String category, String keyword, Pageable pageable);
 
-    // "SELECT m FROM Member m INNER JOIN m.team t WHERE t.name = :teamName";
-    // select m from Member m inner join m.team t"
     @Query(value = "select DISTINCT p from Post p INNER JOIN p.likesList l WHERE l.user.userId = :id")
     Page<Post> findLikedPostById(Long id, Pageable pageable);
 

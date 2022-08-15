@@ -2,18 +2,16 @@ package jpabook.jpashop.service;
 
 import jpabook.jpashop.common.exception.SowonException;
 import jpabook.jpashop.common.exception.Status;
+import jpabook.jpashop.domain.wish.Likes;
 import jpabook.jpashop.domain.wish.Location;
 import jpabook.jpashop.domain.wish.Photo;
 import jpabook.jpashop.domain.wish.Post;
 
 import jpabook.jpashop.dto.PhotoDTO;
 import jpabook.jpashop.dto.post.*;
-import jpabook.jpashop.repository.LocationRepository;
-import jpabook.jpashop.repository.PhotoRepository;
+import jpabook.jpashop.repository.*;
 
 
-import jpabook.jpashop.repository.PostRepository;
-import jpabook.jpashop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -39,6 +37,7 @@ public class PostService {
     private final LocationRepository locationRepo;
     private final ModelMapper modelMapper;
     private final PhotoRepository photoRepo;
+    private final LikesRepository likesRepo;
 
 
     @Transactional
@@ -102,12 +101,17 @@ public class PostService {
 
     }
 
-    public GetPostDto.Response getPost(Long id, List<Long> photoId) {
+    public GetPostDto.Response getPost(Long userId, Long id, List<Long> photoId) {
         Post post = postRepo.findById(id).orElseThrow(() -> new SowonException(Status.NOT_FOUND));
         //post.setPhotos(photoId);
+        // 해당 유저가 해당 포스트에 좋아요 했는지
+
+
+        Optional<Likes> likesOptional = likesRepo.findByPostAndUserUserId(post, userId);
 
         GetPostDto.Post resPost = modelMapper.map(post, GetPostDto.Post.class);
         resPost.setPhotoIdList(photoId);
+        resPost.setIsLike(likesOptional.isPresent());
 
         return GetPostDto.Response.builder().post(resPost)
                 .build();
