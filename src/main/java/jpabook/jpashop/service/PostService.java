@@ -262,4 +262,17 @@ public class PostService {
     public int updateView(Long id){
         return postRepo.updateView(id);
     }
+
+    public List<Post> getMyCommentedPostList(Long id, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
+        Page<Post> pagePost = postRepo.findMyCommentedPostById(id,
+                PageRequest.of(
+                        page.orElse(0),
+                        size.orElse(30),
+                        Sort.Direction.DESC, sortBy.orElse("id")
+                )
+        );
+
+        List<Post> postList = pagePost.getContent();
+        return postList;
+    }
 }
