@@ -264,7 +264,7 @@ public class PostService {
     }
 
     public List<Post> getMyCommentedPostList(Long id, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
-        Page<Post> pagePost = postRepo.findMyCommentedPostById(id,
+        Page<Post> pagePost = postRepo.findMyCommentedPostListById(id,
                 PageRequest.of(
                         page.orElse(0),
                         size.orElse(30),

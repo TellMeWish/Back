@@ -160,4 +160,5 @@ public class PostController {
                 .postList(postService.getPostListDtoWithPhotoIdSetting(postList))
                 .build());
     }
+
 }
