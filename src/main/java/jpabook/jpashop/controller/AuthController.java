@@ -2,6 +2,7 @@ package jpabook.jpashop.controller;
 
 import jpabook.jpashop.dto.LoginDto;
 import jpabook.jpashop.dto.TokenDTO;
+import jpabook.jpashop.dto.TokenUserDTO;
 import jpabook.jpashop.jwt.JwtFilter;
 import jpabook.jpashop.jwt.TokenProvider;
 import org.springframework.http.HttpHeaders;
@@ -44,4 +45,25 @@ public class AuthController {
 
         return new ResponseEntity<>(new TokenDTO(jwt), httpHeaders, HttpStatus.OK);
     }
+
+    /*@CrossOrigin("*")
+    @PostMapping("/authenticate")
+    public ResponseEntity<TokenUserDTO> authorize(@Valid @RequestBody LoginDto loginDto) {
+
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
+
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String jwt = tokenProvider.createToken(authentication);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        //findUserByUsername
+        //String id = id, String userid = userid, String nickname = nickname
+
+        return new ResponseEntity<TokenUserDTO>(new TokenUserDTO(jwt,"id","userid","nickname"), httpHeaders, HttpStatus.OK);
+    }*/
+
 }
