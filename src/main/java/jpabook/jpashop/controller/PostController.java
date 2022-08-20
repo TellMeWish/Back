@@ -66,7 +66,7 @@ public class PostController {
 
     @ApiOperation(value = "게시글 id별 게시글 조회")
     @GetMapping("/{id}")
-    public ResponseEntity<GetPostDto.Response> getPost( @AuthenticationPrincipal CustomUserDetails user, @PathVariable Long id) {
+    public ResponseEntity<GetPostDto.Response> getPost(@PathVariable Long id) {
         List<Photo> photoList = photoRepository.findAllByPostId(id);
         List<Long> photoId = new ArrayList<>();
 
@@ -74,7 +74,7 @@ public class PostController {
             photoId.add(photo.getId());
         }
         postService.updateView(id); // views ++
-        return ResponseEntity.ok().body(postService.getPost(user.getId(), id, photoId));
+        return ResponseEntity.ok().body(postService.getPost(id, photoId));
     }
 
     @ApiOperation(value = "게시글 수정")
@@ -149,16 +149,4 @@ public class PostController {
                 .postList(postService.getPostListDtoWithPhotoIdSetting(postList))
                 .build());
     }
-
-    @ApiOperation(value = "내가 댓글 쓴 게시글 목록")
-    @GetMapping("/myCommentedPostList")
-    public ResponseEntity<GetPostListDto.Response> getMyCommentedPostList(@AuthenticationPrincipal CustomUserDetails user, @RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy) {
-        List<Post> postList = postService.getMyCommentedPostList(user.getId(), page, size, sortBy);
-        System.out.println("내가 댓글 쓴 게시글 개수 : " + postList.size());
-
-        return ResponseEntity.ok().body(GetPostListDto.Response.builder()
-                .postList(postService.getPostListDtoWithPhotoIdSetting(postList))
-                .build());
-    }
-
 }

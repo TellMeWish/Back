@@ -26,7 +26,7 @@ public class Comment extends BaseTimeEntity{
     @JsonIgnore
     private Comment parent;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
 

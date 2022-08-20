@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.Optional;
-
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query(value = "select p from Post p where p.isPrivate = 0")
@@ -23,15 +21,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "select p from Post p where p.category = :category and p.title LIKE CONCAT('%',:keyword,'%')")
     Page<Post> findPostsByKeywordCategory(String category, String keyword, Pageable pageable);
 
+    // "SELECT m FROM Member m INNER JOIN m.team t WHERE t.name = :teamName";
+    // select m from Member m inner join m.team t"
     @Query(value = "select DISTINCT p from Post p INNER JOIN p.likesList l WHERE l.user.userId = :id")
     Page<Post> findLikedPostById(Long id, Pageable pageable);
 
-    @Query( value = "select distinct p.* from comment c, post p where p.post_id = c.post_id and c.user_id = :id",
-            nativeQuery = true)
-    Page<Post> findMyCommentedPostListById(Long id, Pageable pageable);
-
-    @Query(value = "select p from Post p where p.post_user_id.userId = :userId and p.id = :postId")
-    Optional<Post> findByPostAndUserId(Long postId, Long userId);
 
     @Modifying
     @Query("update Post p set p.viewCount = p.viewCount + 1 where p.id = :id")

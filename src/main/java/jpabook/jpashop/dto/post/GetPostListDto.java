@@ -58,6 +58,7 @@ public class GetPostListDto {
         private String content;
         private User user;
         private Boolean secret;
+
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private LocalDateTime createdAt;
         private List<GetPostDto.Comment> commentList;

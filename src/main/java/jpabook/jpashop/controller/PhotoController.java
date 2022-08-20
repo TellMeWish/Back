@@ -1,6 +1,5 @@
 package jpabook.jpashop.controller;
 
-import io.swagger.annotations.ApiOperation;
 import jpabook.jpashop.domain.wish.Photo;
 import jpabook.jpashop.dto.PhotoDTO;
 import jpabook.jpashop.dto.PhotoResponseDTO;
@@ -26,7 +25,7 @@ public class PhotoController {
     private final PostService postService;
     private final PhotoRepository photoRepo;
 
-    @ApiOperation(value = "게시글 목록용 이미지 조회", notes = "이미지가 없는 게시글은 기본 썸네일 이미지 조회")
+    //썸네일 이미지 조회시
     @CrossOrigin
     @GetMapping(
             value = "/thumbnail/{id}",
@@ -55,6 +54,9 @@ public class PhotoController {
             }
         }
 
+        System.out.println("당신의 패스는? : " + path);
+
+
         InputStream imageStream = new FileInputStream(absolutePath + path);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
         imageStream.close();
@@ -62,7 +64,7 @@ public class PhotoController {
         return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "게시글 세부내용 이미지 조회")
+    //이미지 개별로 조회시
     @CrossOrigin
     @GetMapping(
             value = "/{id}",
@@ -78,6 +80,10 @@ public class PhotoController {
         InputStream imageStream = new FileInputStream(absolutePath + path);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
         imageStream.close();
+
+//        PhotoResponseDTO photoDTO = new PhotoResponseDTO();
+//        photoDTO.setData(imageByteArray);
+
 
         return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
     }
