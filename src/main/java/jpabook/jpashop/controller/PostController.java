@@ -149,4 +149,15 @@ public class PostController {
                 .postList(postService.getPostListDtoWithPhotoIdSetting(postList))
                 .build());
     }
+
+    @ApiOperation(value = "내가 댓글 쓴 게시글 목록")
+    @GetMapping("/myCommentedPostList")
+    public ResponseEntity<GetPostListDto.Response> getMyCommentedPostList(@AuthenticationPrincipal CustomUserDetails user, @RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy) {
+        List<Post> postList = postService.getMyCommentedPostList(user.getId(), page, size, sortBy);
+        System.out.println("내가 댓글 쓴 게시글 개수 : " + postList.size());
+
+        return ResponseEntity.ok().body(GetPostListDto.Response.builder()
+                .postList(postService.getPostListDtoWithPhotoIdSetting(postList))
+                .build());
+    }
 }

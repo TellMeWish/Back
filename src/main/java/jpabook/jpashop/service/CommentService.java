@@ -11,10 +11,15 @@ import jpabook.jpashop.repository.CommentRepository;
 import jpabook.jpashop.repository.PostRepository;
 import jpabook.jpashop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -76,5 +81,16 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
+    public List<Comment> getMyCommentList(Long id, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
+        Page<Comment> pageComment =commentRepository.findMyCommentListById(
+                id,
+                PageRequest.of(
+                        page.orElse(0),
+                        size.orElse(30),
+                        Sort.Direction.DESC, sortBy.orElse("id")
+                )
+        );
 
+        return pageComment.getContent();
+    }
 }
