@@ -10,7 +10,9 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface LikesRepository extends JpaRepository<Likes, Long> {
-    Optional<Likes> findLikesByPostAndUser(Post post, User user);
+    Optional<Likes> findByPostAndUser(Post post, User user);
+
+    Optional<Likes> findByPostAndUserUserId(Post post, Long userId);
 
 /*
     @Modifying
@@ -29,6 +31,8 @@ public interface LikesRepository extends JpaRepository<Likes, Long> {
     @Modifying
     @Query("update Post p set p.likeCount = p.likeCount - 1 where p.id = :id")
     int minusLikesCount(Long id);
+
+
 
 
 }

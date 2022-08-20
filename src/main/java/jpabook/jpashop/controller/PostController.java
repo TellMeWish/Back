@@ -66,7 +66,7 @@ public class PostController {
 
     @ApiOperation(value = "게시글 id별 게시글 조회")
     @GetMapping("/{id}")
-    public ResponseEntity<GetPostDto.Response> getPost(@PathVariable Long id) {
+    public ResponseEntity<GetPostDto.Response> getPost( @AuthenticationPrincipal CustomUserDetails user, @PathVariable Long id) {
         List<Photo> photoList = photoRepository.findAllByPostId(id);
         List<Long> photoId = new ArrayList<>();
 
@@ -74,7 +74,7 @@ public class PostController {
             photoId.add(photo.getId());
         }
         postService.updateView(id); // views ++
-        return ResponseEntity.ok().body(postService.getPost(id, photoId));
+        return ResponseEntity.ok().body(postService.getPost(user.getId(), id, photoId));
     }
 
     @ApiOperation(value = "게시글 수정")

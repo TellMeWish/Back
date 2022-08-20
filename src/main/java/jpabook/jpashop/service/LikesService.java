@@ -64,7 +64,7 @@ public class LikesService {
         Post post = postRepository.findById(likesDto.getPostId()).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
 
         return likesRepository
-                .findLikesByPostAndUser(post, user);
+                .findByPostAndUser(post, user);
     }
 
     @Transactional

@@ -31,6 +31,8 @@ public class GetPostDto {
         private int viewCount;
         private int likeCount;
         private Location location;
+        private Boolean isLike;
+        private Boolean isMyPost;
        //private List<Likes> likesList;
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
