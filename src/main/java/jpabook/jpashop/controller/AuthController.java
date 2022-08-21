@@ -2,8 +2,14 @@ package jpabook.jpashop.controller;
 
 import jpabook.jpashop.dto.LoginDto;
 import jpabook.jpashop.dto.TokenDTO;
+import jpabook.jpashop.dto.TokenUserDTO;
+import jpabook.jpashop.dto.post.User;
 import jpabook.jpashop.jwt.JwtFilter;
 import jpabook.jpashop.jwt.TokenProvider;
+import jpabook.jpashop.repository.UserRepository;
+import jpabook.jpashop.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +28,9 @@ public class AuthController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
+    @Autowired
+    UserRepository userRepository;
+
     public AuthController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
@@ -29,7 +38,7 @@ public class AuthController {
 
     @CrossOrigin("*")
     @PostMapping("/authenticate")
-    public ResponseEntity<TokenDTO> authorize(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<TokenUserDTO> authorize(@Valid @RequestBody LoginDto loginDto) {
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
@@ -42,6 +51,12 @@ public class AuthController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
-        return new ResponseEntity<>(new TokenDTO(jwt), httpHeaders, HttpStatus.OK);
+        User user = userRepository.findUserByUsername(loginDto.getUsername());
+
+
+        //findUserByUsername
+        //String id = id, String userid = userid, String nickname = nicknameß
+        return new ResponseEntity<TokenUserDTO>(
+                new TokenUserDTO(jwt, user.getUserId(), user.getUsername(), user.getNickname()), httpHeaders, HttpStatus.OK);
     }
 }
