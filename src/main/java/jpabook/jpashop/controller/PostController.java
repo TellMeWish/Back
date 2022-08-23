@@ -122,6 +122,17 @@ public class PostController {
                 .build());
     }
 
+    @ApiOperation(value = "특정 위치 반경 내 게시물들 조회")
+    @GetMapping("/locations")
+    public ResponseEntity<GetPostListDto.Response>  getPostLocations(@RequestParam Float lat, @RequestParam Float lng, @RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy){
+        // locationService.getLocationsByCenter(lat, lng);
+        List<Post> postList = postService.getPostListByCoord(lat, lng, page, size, sortBy);
+
+        return ResponseEntity.ok().body(GetPostListDto.Response.builder()
+                .postList(postService.getPostListDtoWithPhotoIdSetting(postList))
+                .build());
+    }
+
     @ApiOperation(value = "게시글 검색") //카테고리 검색은 곧 추가
     @PostMapping("/search")
     public ResponseEntity<GetPostListDto.Response> getPostListByKeyword(@RequestParam(defaultValue = "all", required = false) String category, @RequestParam(defaultValue = "") String keyword, @RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy) {

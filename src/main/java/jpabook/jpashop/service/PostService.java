@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -64,6 +65,7 @@ public class PostService {
     }
 
 
+    @Transactional
     public void updatePost(UpdatePostDto.Request reqDto, Long id, List<MultipartFile> multipartFileList, Long userId) throws Exception {
         Post findPost = postRepo.findById(id).get();
         if(!findPost.getPost_user_id().getUserId().equals(userId)){
@@ -89,6 +91,7 @@ public class PostService {
         postRepo.save(findPost);
     }
 
+    @Transactional
     public void deletePost(Long id, Long userId) {
 
         Post findPost = postRepo.findById(id).get();
@@ -267,6 +270,20 @@ public class PostService {
                 )
         );
 
+        List<Post> postList = pagePost.getContent();
+        return postList;
+    }
+
+    public List<Post> getPostListByCoord(Float lat, Float lng, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy){
+        Float r = 0.9f;
+
+        Page<Post> pagePost = postRepo.findPostByCoord((double)lat, (double)lng, (double)r,
+                PageRequest.of(
+                        page.orElse(0),
+                        size.orElse(40),
+                        Sort.Direction.DESC, sortBy.orElse("id")
+                )
+        );
         List<Post> postList = pagePost.getContent();
         return postList;
     }

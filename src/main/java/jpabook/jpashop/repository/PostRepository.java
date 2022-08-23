@@ -33,6 +33,14 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             nativeQuery = true)
     Page<Post> findMyCommentedPostListById(Long id, Pageable pageable);
 
+    @Query(value = "select p from Post p " +
+            "where (6371 * acos(" +
+            "cos(radians(:x)) * cos(radians(p.location.latitude)) * " +
+            "cos(radians(p.location.longitude) - radians(:y)) + " +
+            "sin(radians(:x)) * sin(radians(p.location.latitude))" +
+            ")) <= :r")
+    Page<Post> findPostByCoord(Double x, Double y, Double r, Pageable pageable);
+
 
     @Modifying
     @Query("update Post p set p.viewCount = p.viewCount + 1 where p.id = :id")
