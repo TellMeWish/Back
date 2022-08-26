@@ -171,6 +171,21 @@ public class PostService {
 
     }
 
+    public List<Post> getPostListByUserIdIncludeShare(Long id, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
+
+        Page<Post> pagePost = postRepo.findPostByIdIncludeShare(id,
+                PageRequest.of(
+                        page.orElse(0),
+                        size.orElse(30),
+                        Sort.Direction.DESC, sortBy.orElse("id")
+                )
+        );
+
+        List<Post> postList = pagePost.getContent();
+        return postList;
+
+    }
+
     public List<Post> getPostListByKeyword(String category, String keyword, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
         Page<Post> pagePost = null;
         if(category.equals("all")){

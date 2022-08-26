@@ -55,7 +55,7 @@ public class PostController {
 
 
     @ApiOperation(value = "게시글 등록")
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Void> create(@RequestPart(value = "img", required = false) List<MultipartFile> files,
                                        @RequestPart(value = "dto") CreatePostDto.Request reqDto,
                                        @AuthenticationPrincipal CustomUserDetails user) throws Exception {
@@ -109,6 +109,16 @@ public class PostController {
                 .postList(postService.getPostListDtoWithPhotoIdSetting(postList))
                 .build());
 
+    }
+
+    @ApiOperation(value = "사용자 id별 + 사용자가 공유받은 게시글들 조회")
+    @GetMapping("/myPostList/share")
+    public ResponseEntity<GetPostListDto.Response> getPostListByUserIdIncludeShare(@AuthenticationPrincipal CustomUserDetails user, @RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy) {
+        List<Post> postList = postService.getPostListByUserIdIncludeShare(user.getId(), page, size, sortBy);
+
+        return ResponseEntity.ok().body(GetPostListDto.Response.builder()
+                .postList(postService.getPostListDtoWithPhotoIdSetting(postList))
+                .build());
     }
 
     @ApiOperation(value = "사용자 id별 게시글들 조회")

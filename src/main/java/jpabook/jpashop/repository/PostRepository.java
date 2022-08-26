@@ -29,6 +29,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "select p from Post p where p.post_user_id.userId = :userId and p.id = :postId")
     Optional<Post> findByPostAndUserId(Long postId, Long userId);
 
+    @Query( value = "select distinct p from Post p, User u, Share s where p.post_user_id.userId = u.userId and ((p.id = s.post.id and s.user.userId = :id) or p.post_user_id.userId = :id)")
+    Page<Post> findPostByIdIncludeShare(Long id, Pageable pageable);
+
     @Query( value = "select distinct p.* from comment c, post p where p.post_id = c.post_id and c.user_id = :id",
             nativeQuery = true)
     Page<Post> findMyCommentedPostListById(Long id, Pageable pageable);
