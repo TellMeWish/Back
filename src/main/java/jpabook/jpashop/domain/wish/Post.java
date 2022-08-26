@@ -60,6 +60,10 @@ public class Post extends BaseTimeEntity{
     @JsonIgnoreProperties({"post"})
     private List<Likes> likesList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"post"})
+    private List<Share> shareList = new ArrayList<>();
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")

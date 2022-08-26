@@ -11,10 +11,7 @@ import jpabook.jpashop.jwt.JwtFilter;
 import jpabook.jpashop.repository.PhotoRepository;
 import jpabook.jpashop.repository.PostRepository;
 import jpabook.jpashop.repository.UserRepository;
-import jpabook.jpashop.service.LikesService;
-import jpabook.jpashop.service.PhotoService;
-import jpabook.jpashop.service.PostService;
-import jpabook.jpashop.service.UserService;
+import jpabook.jpashop.service.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +42,8 @@ public class PostController {
 
     private final LikesService likesService;
 
+    private final ShareService shareService;
+
     @Autowired
     PostRepository postRepository;
     @Autowired
@@ -56,7 +55,7 @@ public class PostController {
 
 
     @ApiOperation(value = "게시글 등록")
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<Void> create(@RequestPart(value = "img", required = false) List<MultipartFile> files,
                                        @RequestPart(value = "dto") CreatePostDto.Request reqDto,
                                        @AuthenticationPrincipal CustomUserDetails user) throws Exception {
@@ -171,4 +170,20 @@ public class PostController {
                 .postList(postService.getPostListDtoWithPhotoIdSetting(postList))
                 .build());
     }
+
+    @ApiOperation(value = "게시글 공유받기")
+    @PostMapping("/share")
+    public ResponseEntity<ShareDto> getSharePost(@AuthenticationPrincipal CustomUserDetails user, @RequestBody @Valid ShareDto shareDto) {
+        String shareMsg = shareService.getShare(user.getId(), shareDto);
+        System.out.println(shareMsg);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @ApiOperation(value = "공유받은 게시글 취소하기")
+    @DeleteMapping("/share/delete")
+    public ResponseEntity<ShareDto> deleteSharePost(@AuthenticationPrincipal CustomUserDetails user, @RequestBody @Valid ShareDto shareDto) {
+        shareService.deleteShare(user.getId(), shareDto);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 }
