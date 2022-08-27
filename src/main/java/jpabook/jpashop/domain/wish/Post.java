@@ -1,10 +1,9 @@
 package jpabook.jpashop.domain.wish;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jpabook.jpashop.dto.post.UpdatePostDto;
 import jpabook.jpashop.dto.post.User;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Where;
 import javax.persistence.*;
@@ -16,6 +15,7 @@ import static javax.persistence.FetchType.LAZY;
 @Getter
 @Setter
 @NoArgsConstructor
+
 public class Post extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,6 +82,8 @@ public class Post extends BaseTimeEntity{
             orphanRemoval = true)
     private List<Photo> photos = new ArrayList<>();
 
+
+
     public void addPhoto(Photo photo) {
         this.photos.add(photo);
 
@@ -89,5 +91,15 @@ public class Post extends BaseTimeEntity{
             photo.setPost(this);
     }
 
-
+    @Builder
+    public Post(String category, String title, String content, int isPrivate, int isCompleted, int isParticipate, int isProgress, Location location) {
+        this.category = category;
+        this.title = title;
+        this.content = content;
+        this.isPrivate = isPrivate;
+        this.isCompleted = isCompleted;
+        this.isParticipate = isParticipate;
+        this.isProgress = isProgress;
+        this.location = location;
+    }
 }

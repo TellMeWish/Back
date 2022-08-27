@@ -1,11 +1,14 @@
 package jpabook.jpashop.dto.post;
 
+import jpabook.jpashop.domain.wish.Location;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 public class UpdatePostDto {
     @Getter
-    @Setter
+    @NoArgsConstructor
     public static class Request{
         private String content;
         private String title;
@@ -14,9 +17,27 @@ public class UpdatePostDto {
         private int isPrivate;
         private int isCompleted;
         private int isProgress;
+        private Location location;
+
+        @Builder
+        public Request(String content, String title, String category, int isParticipate, int isPrivate, int isCompleted, int isProgress, Location location) {
+            this.content = content;
+            this.title = title;
+            this.category = category;
+            this.isParticipate = isParticipate;
+            this.isPrivate = isPrivate;
+            this.isCompleted = isCompleted;
+            this.isProgress = isProgress;
+            this.location = location;
+        }
+
     }
 
-    public static class Response{
-
+    @Getter
+    @Setter
+    public static class Location{
+        private float latitude;
+        private float longitude;
     }
+
 }

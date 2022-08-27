@@ -2,10 +2,7 @@ package jpabook.jpashop.service;
 
 import jpabook.jpashop.common.exception.SowonException;
 import jpabook.jpashop.common.exception.Status;
-import jpabook.jpashop.domain.wish.Likes;
-import jpabook.jpashop.domain.wish.Location;
-import jpabook.jpashop.domain.wish.Photo;
-import jpabook.jpashop.domain.wish.Post;
+import jpabook.jpashop.domain.wish.*;
 
 import jpabook.jpashop.dto.PhotoDTO;
 import jpabook.jpashop.dto.post.*;
@@ -78,7 +75,10 @@ public class PostService {
         findPost.setIsParticipate(reqDto.getIsParticipate());
         findPost.setIsPrivate(reqDto.getIsPrivate());
         findPost.setIsProgress(reqDto.getIsProgress());
-        //Post post = modelMapper.map(reqDto, Post.class);
+        findPost.setIsCompleted(reqDto.getIsCompleted());
+        Location location = locationRepo.findLocationByPostId(findPost.getId());
+        location.setLongitude(reqDto.getLocation().getLongitude());
+        location.setLatitude(reqDto.getLocation().getLatitude());
 
         //파일처리
         List<MultipartFile> newMultipartFileList = updatePhotoList(multipartFileList, id);
