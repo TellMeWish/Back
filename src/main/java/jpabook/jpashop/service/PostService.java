@@ -37,6 +37,8 @@ public class PostService {
     private final PhotoRepository photoRepo;
     private final LikesRepository likesRepo;
 
+    private final ShareRepository shareRepository;
+
 
     @Transactional
     public void insertPost(CreatePostDto.Request reqDto, List<MultipartFile> files, Long userId) throws Exception {
@@ -117,6 +119,16 @@ public class PostService {
         resPost.setPhotoIdList(photoId);
         resPost.setIsLike(likesOptional.isPresent());
         resPost.setIsMyPost(postOptional.isPresent());
+
+        Optional<Share> shareOptional = shareRepository.findByPostAndUserUserId(post, userId);
+
+        resPost.setIsShare(shareOptional.isPresent());
+
+        if(shareOptional.isPresent()){ // 공유한 글일 경우
+            Share share = shareRepository.findByPostAndUserId(post, userId);
+            resPost.setMyProgress(share.getProgress());
+
+        }
 
         return GetPostDto.Response.builder().post(resPost)
                 .build();

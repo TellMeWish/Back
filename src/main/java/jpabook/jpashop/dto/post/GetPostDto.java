@@ -33,7 +33,9 @@ public class GetPostDto {
         private Location location;
         private Boolean isLike;
         private Boolean isMyPost;
-       //private List<Likes> likesList;
+        private Boolean isShare;
+        private int myProgress;
+
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private LocalDateTime createdAt;

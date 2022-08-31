@@ -196,4 +196,11 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @ApiOperation(value = "공유받은 글 진행상황 바꾸기")
+    @PutMapping("/share")
+    public ResponseEntity<UpdateShareDto> updateSharePost(@AuthenticationPrincipal CustomUserDetails user, @RequestBody @Valid UpdateShareDto updateShareDto){
+        shareService.updateShare(user.getId(), updateShareDto);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 }

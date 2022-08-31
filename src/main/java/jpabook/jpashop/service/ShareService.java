@@ -7,6 +7,7 @@ import jpabook.jpashop.domain.wish.Post;
 import jpabook.jpashop.domain.wish.Share;
 import jpabook.jpashop.dto.post.LikesDto;
 import jpabook.jpashop.dto.post.ShareDto;
+import jpabook.jpashop.dto.post.UpdateShareDto;
 import jpabook.jpashop.dto.post.User;
 import jpabook.jpashop.repository.LikesRepository;
 import jpabook.jpashop.repository.PostRepository;
@@ -29,7 +30,7 @@ public class ShareService {
     public String getShare(Long userId, ShareDto shareDto){
 
         User user = userRepository.findById(userId).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
-        Post post = postRepository.findById(shareDto.getPostId()).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
+        Post post = postRepository.findById(shareDto.getPostId()).orElseThrow(() -> new SowonException(Status.NO_CONTENT));
 
 
         //공유받은 적 없는 글 일경우
@@ -67,9 +68,21 @@ public class ShareService {
 
     public Optional<Share> findShareByPostAndUser(Long userId, ShareDto shareDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
-        Post post = postRepository.findById(shareDto.getPostId()).orElseThrow(() -> new SowonException(Status.ACCESS_DENIED));
+        Post post = postRepository.findById(shareDto.getPostId()).orElseThrow(() -> new SowonException(Status.NO_CONTENT));
 
         return shareRepository.findByPostAndUser(post, user);
+    }
+
+    public void updateShare(Long userId, UpdateShareDto updateShareDto){
+        Post post = postRepository.findById(updateShareDto.getPostId()).orElseThrow(() -> new SowonException(Status.NO_CONTENT));
+
+        Optional<Share> shareOptional = shareRepository.findByPostAndUserUserId(post, userId);
+       if(shareOptional.isEmpty()){
+           throw new SowonException("공유된 글이 아닙니다.");
+       }
+       else{
+           shareRepository.updateProgress(userId, post.getId(), updateShareDto.getProgress());
+       }
     }
 
 }
