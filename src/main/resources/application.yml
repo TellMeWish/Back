@@ -7,7 +7,7 @@ spring:
     token-validity-in-seconds: 86400
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://sowon-db.cyumdfzrqmsj.ap-northeast-2.rds.amazonaws.com:3306/sowon
+    url: jdbc:mysql://sowon-db.cyumdfzrqmsj.ap-northeast-2.rds.amazonaws.com:3306/sowon?serverTimezone=Asia/Seoul
     username: sowon
     password: sowon1234
   jpa:
