@@ -1,5 +1,4 @@
-<img src="https://img.shields.io/badge/Spring Boot-#6DB33F?style=flat-square&logo=Spring Boot&logoColor=#6DB33F"/>
-
+ <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=TypeScript&logoColor=white"/>
 
 # 버킷리스트 공유 웹 소셜 사이트
 --------------------
