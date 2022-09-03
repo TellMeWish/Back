@@ -5,11 +5,11 @@
 >지도 기반 위치 서비스를 이용해 원하는 지역에서 참여할 수 있는 버킷리스트를 한눈에 볼 수 있습니다.
 >또한 자신의 버킷리스트들을 진행 상황에 맞춰 관리하며, 달성률을 한눈에 볼 수 있게
 >가시화하여 목표한 버킷리스트의 달성에 대한 성취감을 높여줍니다.    
-
+  
 
 ![image](https://user-images.githubusercontent.com/54715532/188254972-84245590-fcf5-41d3-bce9-d032fcd5486a.png)    
 
-
+  
 
 * 주요 기능  
 -작성자가 공개 설정한 글들 조회  
@@ -28,7 +28,7 @@
 
 
 * 기술 스택  
-개발 언어: HTML5, CSS3, JavaScript, Java  
-데이터베이스: MySQL  
-적용 기술: React, Spring boot, Spring Data JPA, Axios, Spring Security  
-클라우드: AWS EC2  
+- 개발 언어: HTML5, CSS3, JavaScript, Java  
+- 데이터베이스: MySQL  
+- 적용 기술: React, Spring boot, Spring Data JPA, Axios, Spring Security  
+- 클라우드: AWS EC2  
