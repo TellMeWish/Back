@@ -52,8 +52,6 @@ public class FileHandler {
             //isDirectoryCreated = file.mkdir();
             System.out.println("폴더생성 완료");
         }
-        System.out.println("폴더생성 구간을 지났습니다");
-
 
         //다중 파일 처리
         for (MultipartFile multipartFile : multipartFiles) {

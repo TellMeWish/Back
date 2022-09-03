@@ -78,7 +78,8 @@ public class Post extends BaseTimeEntity{
     private List<Comment> commentList = new ArrayList<>();
 
     @OneToMany(mappedBy = "post",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            fetch = LAZY,
+            cascade = {CascadeType.REMOVE},
             orphanRemoval = true)
     private List<Photo> photos = new ArrayList<>();
 
