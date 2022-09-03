@@ -1,13 +1,4 @@
-<div align="center">
-	<img src="https://img.shields.io/badge/Java-007396?style=flat&logo=Java&logoColor=white" />
-	<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white" />
-	<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white" />
-	<img src="https://img.shields.io/badge/SpringBoot-1572B6?style=flat&logo=SpringBoot&logoColor=white" />
-	<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white" />
-	<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white" />
-	<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white" />
-	
-</div>
+
 # 버킷리스트 공유 웹 소셜 사이트
 --------------------
 >자신의 버킷리스트를 다른 사용자들과 공유하는 웹 소셜 네트워크 서비스입니다.
@@ -42,3 +33,11 @@
 - 데이터베이스: MySQL  
 - 적용 기술: React, Spring boot, Spring Data JPA, Axios, Spring Security  
 - 클라우드: AWS EC2  
+<div align="center">
+	<img src="https://img.shields.io/badge/SpringSecurity-E34F26?style=flat&logo=SpringSecurity&logoColor=white" />
+	<img src="https://img.shields.io/badge/EC2-1572B6?style=flat&logo=EC2&logoColor=white" />
+	<img src="https://img.shields.io/badge/SpringBoot-1572B6?style=flat&logo=SpringBoot&logoColor=white" />
+	<img src="https://img.shields.io/badge/React-1572B6?style=flat&logo=React&logoColor=white" />
+	<img src="https://img.shields.io/badge/SpringDataJpa-1572B6?style=flat&logo=SpringDataJpa&logoColor=white" />
+	<img src="https://img.shields.io/badge/Axios-1572B6?style=flat&logo=Axios&logoColor=white" />
+</div>
