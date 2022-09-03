@@ -28,6 +28,12 @@
 -좋아요한 글, 내가 댓글 단 글, 공유한 글 조회  
 
 
+* 기술 스택  
+- 개발 언어: HTML5, CSS3, JavaScript, Java  
+- 데이터베이스: MySQL  
+- 적용 기술: React, Spring boot, Spring Data JPA, Axios, Spring Security  
+- 클라우드: AWS EC2  
+
 <div align="center">
 	<img src="https://img.shields.io/badge/SpringBoot-1572B6?style=flat&logo=SpringBoot&logoColor=white" />
 	<img src="https://img.shields.io/badge/React-1572B6?style=flat&logo=React&logoColor=white" />
@@ -37,9 +43,4 @@
 	<img src="https://img.shields.io/badge/Axios-1572B6?style=flat&logo=Axios&logoColor=white" />
 	<img src="https://img.shields.io/badge/AWS EC2-1572B6?style=flat&logo=AWS EC2&logoColor=white" />
 </div>
-* 기술 스택  
-- 개발 언어: HTML5, CSS3, JavaScript, Java  
-- 데이터베이스: MySQL  
-- 적용 기술: React, Spring boot, Spring Data JPA, Axios, Spring Security  
-- 클라우드: AWS EC2  
 
