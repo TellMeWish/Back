@@ -34,10 +34,11 @@
 - 적용 기술: React, Spring boot, Spring Data JPA, Axios, Spring Security  
 - 클라우드: AWS EC2  
 <div align="center">
-	<img src="https://img.shields.io/badge/SpringSecurity-E34F26?style=flat&logo=SpringSecurity&logoColor=white" />
-	<img src="https://img.shields.io/badge/EC2-1572B6?style=flat&logo=EC2&logoColor=white" />
 	<img src="https://img.shields.io/badge/SpringBoot-1572B6?style=flat&logo=SpringBoot&logoColor=white" />
 	<img src="https://img.shields.io/badge/React-1572B6?style=flat&logo=React&logoColor=white" />
 	<img src="https://img.shields.io/badge/SpringDataJpa-1572B6?style=flat&logo=SpringDataJpa&logoColor=white" />
+	<img src="https://img.shields.io/badge/MySQL-1572B6?style=flat&logo=MySQL&logoColor=white" />
+	<img src="https://img.shields.io/badge/SpringSecurity-E34F26?style=flat&logo=SpringSecurity&logoColor=white" />
 	<img src="https://img.shields.io/badge/Axios-1572B6?style=flat&logo=Axios&logoColor=white" />
+	<img src="https://img.shields.io/badge/AWS EC2-1572B6?style=flat&logo=AWS EC2&logoColor=white" />
 </div>
