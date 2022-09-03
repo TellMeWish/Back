@@ -85,6 +85,9 @@ public class PostService {
         //파일처리
         List<MultipartFile> newMultipartFileList = updatePhotoList(multipartFileList, id);
         List<Photo> photoList = FileHandler.parseFileInfo(findPost, newMultipartFileList);
+        for(Photo photo : photoList) {
+            System.out.println("리스트 - " + photo.getFileOriName());
+        }
         if (!photoList.isEmpty()) {
             photoRepo.saveAll(photoList);
         }
@@ -257,6 +260,7 @@ public class PostService {
                 for (Photo dbPhoto : dbPhotoList)
                     photoRepo.deleteById(dbPhoto.getId());
             } else {  // 전달되어온 파일 한 장 이상 존재
+                List<String> oldMultiFileNameList = oldMultiFileList.stream().map(MultipartFile::getOriginalFilename).collect(Collectors.toList());
                 List<String> dbOriginNameList = new ArrayList<>();
                 for (Photo dbPhoto : dbPhotoList) {
                     Photo entity = photoRepo.findById(dbPhoto.getId()).orElseThrow(()
@@ -271,8 +275,9 @@ public class PostService {
                     String dbOriFileName = dbPhotoDto.getFileOriName();
 
 
-                    if (!oldMultiFileList.contains(dbOriFileName))
+                    if (!oldMultiFileNameList.contains(dbOriFileName)) {
                         photoRepo.deleteById(dbPhoto.getId());
+                    }
                     else
                         dbOriginNameList.add(dbOriFileName);
                 }
@@ -283,6 +288,8 @@ public class PostService {
                         newFileList.add(multipartFile);
                     }
                 }
+
+
             }
         }
         return newFileList;
