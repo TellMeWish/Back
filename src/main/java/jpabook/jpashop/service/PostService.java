@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -171,6 +170,25 @@ public class PostService {
         return resPostList;
     }
 
+    public List<GetMyPostListDto.Post> getMyPostListDtoWithPhotoIdSetting(List<GetMyPostListDto.Post> postList) {
+
+        List<GetMyPostListDto.Post> resPostList = postList.stream()
+                .map(post -> modelMapper.map(post, GetMyPostListDto.Post.class))
+                .collect(Collectors.toList());
+        Long plID = 0L;
+
+        for(int i =0; i < postList.size(); i++) {
+            if(!postList.get(i).getPhotos().isEmpty())  //첨부파일 존재
+                plID = postList.get(i).getPhotos().get(0).getId();
+            else
+                plID = 0L;
+
+            resPostList.get(i).setPhotoId(plID);
+        }
+
+        return resPostList;
+    }
+
     public List<Post> getPostListByUserId(Long id, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
 
         Page<Post> pagePost = postRepo.findAllByUserId(id,
@@ -186,7 +204,7 @@ public class PostService {
 
     }
 
-    public List<Post> getPostListByUserIdIncludeShare(Long id, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
+    public List<GetMyPostListDto.Post> getPostListByUserIdIncludeShare(Long id, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
 
         Page<Post> pagePost = postRepo.findPostByIdIncludeShare(id,
                 PageRequest.of(
@@ -197,7 +215,17 @@ public class PostService {
         );
 
         List<Post> postList = pagePost.getContent();
-        return postList;
+/*
+        ResponseEntity.ok().body(GetCommentListDto.Response.builder()
+                        .commentList(commentList.stream()
+                                .map(comment -> modelMapper.map(comment, GetCommentListDto.Comment.class))
+                                .collect(Collectors.toList()))*/
+
+        List<GetMyPostListDto.Post> collect = postList.stream()
+                .map(post -> modelMapper.map(post, GetMyPostListDto.Post.class))
+                .collect(Collectors.toList());
+        return collect;
+
 
     }
 
