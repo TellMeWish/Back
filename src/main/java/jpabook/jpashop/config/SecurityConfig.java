@@ -99,7 +99,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/hello").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
                 .antMatchers("/api/signup").permitAll()
-                .andMatchers("/postList").permitAll()
+                .antMatchers("/postList").permitAll()
 
                 .anyRequest().authenticated() //나머지 요청들은 인증해야함
 
