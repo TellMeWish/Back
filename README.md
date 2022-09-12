@@ -53,7 +53,8 @@
 	<img src="https://img.shields.io/badge/AWS EC2-1572B6?style=flat&logo=AWS EC2&logoColor=white" />
 </div>
 
-![image](https://user-images.githubusercontent.com/54715532/189676197-36d5bd3a-3675-4acd-a427-0a72b7d5eed3.png)
+
+<p align="center"><img src="https://user-images.githubusercontent.com/54715532/189676197-36d5bd3a-3675-4acd-a427-0a72b7d5eed3.png" height="600px" width="500px"></p>
 
 * 개발 언어: HTML5, CSS3, JavaScript, Java  
 * 데이터베이스: MySQL  
