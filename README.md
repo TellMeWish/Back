@@ -8,9 +8,9 @@
 >가시화하여 목표한 버킷리스트의 달성에 대한 성취감을 높여줍니다.    
 <br>
 
-<img src = "https://user-images.githubusercontent.com/54715532/189677632-1c730afe-858a-4b70-94e4-2230c9e313b0.png" width="200px height="100px">
+<img src = "https://user-images.githubusercontent.com/54715532/189677632-1c730afe-858a-4b70-94e4-2230c9e313b0.png" width="200 height="100"/>
 																	      
-																	<img src = "https://user-images.githubusercontent.com/54715532/189677632-1c730afe-858a-4b70-94e4-2230c9e313b0.png" width="20%" height="10%">
+																	
 
 
 
