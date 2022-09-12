@@ -6,34 +6,43 @@
 >지도 기반 위치 서비스를 이용해 원하는 지역에서 참여할 수 있는 버킷리스트를 한눈에 볼 수 있습니다.
 >또한 자신의 버킷리스트들을 진행 상황에 맞춰 관리하며, 달성률을 한눈에 볼 수 있게
 >가시화하여 목표한 버킷리스트의 달성에 대한 성취감을 높여줍니다.    
-  
+<br>
 
 ![image](https://user-images.githubusercontent.com/54715532/188254972-84245590-fcf5-41d3-bce9-d032fcd5486a.png)    
+![image](https://user-images.githubusercontent.com/54715532/189676500-abb8b862-dcc2-4e4c-8665-5ef82d042427.png)
 
+<br>
   
-
-* 주요 기능  
--작성자가 공개 설정한 글들 조회  
--카테고리, 키워드별 글 검색  
--공개 여부, 참여 여부, 카테고리, 제목, 내용, 사진, 위치 정보 입력  
--카테고리, 진행 상황, 모집 여부 포함 글 내용 상세보기  
--좋아요, 공유하기 기능  
--위치 정보 공유  
--글 상세보기에 댓글, 대댓글 작성  
--비밀댓글 설정 시 글 작성자와 댓글 작성자만 확인 가능  
--위치 검색 시 해당 위치 주위의 버킷리스트들 표시  
--마커 클릭 시 버킷리스트 정보 표시, 정보 클릭 시 해당 글로 이동  
--진행 완료된 버킷리스트를 달성률로 표시  
--진행 상황에 따른 게시글 조회  
--좋아요한 글, 내가 댓글 단 글, 공유한 글 조회  
-
-
-* 기술 스택  
-- 개발 언어: HTML5, CSS3, JavaScript, Java  
-- 데이터베이스: MySQL  
-- 적용 기술: React, Spring boot, Spring Data JPA, Axios, Spring Security  
-- 클라우드: AWS EC2  
-
+# 기대효과
+버킷리스트를 다른 사용자와 함께 자유롭게 공유할 수 있다.
+원하는 위치, 카테고리별 버킷리스트를 한눈에 확인할 수 있다.
+내가 이루고 싶은 버킷리스트들을 관리하며 미래 계획을 효과적으로 세울 수 있다.
+버킷리스트 달성률을 통해 목표한 버킷리스트 달성에 대한 성취감을 높여준다.
+<br>
+# 주요 기능  
+작성자가 공개 설정한 글들 조회  
+카테고리, 키워드별 글 검색  
+공개 여부, 참여 여부, 카테고리, 제목, 내용, 사진, 위치 정보 입력  
+카테고리, 진행 상황, 모집 여부 포함 글 내용 상세보기  
+좋아요, 공유하기 기능  
+위치 정보 공유  
+글 상세보기에 댓글, 대댓글 작성  
+비밀댓글 설정 시 글 작성자와 댓글 작성자만 확인 가능  
+위치 검색 시 해당 위치 주위의 버킷리스트들 표시  
+마커 클릭 시 버킷리스트 정보 표시, 정보 클릭 시 해당 글로 이동  
+진행 완료된 버킷리스트를 달성률로 표시  
+진행 상황에 따른 게시글 조회  
+좋아요한 글, 내가 댓글 단 글, 공유한 글 조회  
+<br>
+# 기술 스택  
+<br>
+![image](https://user-images.githubusercontent.com/54715532/189676197-36d5bd3a-3675-4acd-a427-0a72b7d5eed3.png)
+<br>
+개발 언어: HTML5, CSS3, JavaScript, Java  
+데이터베이스: MySQL  
+적용 기술: React, Spring boot, Spring Data JPA, Axios, Spring Security  
+클라우드: AWS EC2  
+<br>
 <div align="center">
 	<img src="https://img.shields.io/badge/SpringBoot-1572B6?style=flat&logo=SpringBoot&logoColor=white" />
 	<img src="https://img.shields.io/badge/React-1572B6?style=flat&logo=React&logoColor=white" />
@@ -43,27 +52,8 @@
 	<img src="https://img.shields.io/badge/Axios-1572B6?style=flat&logo=Axios&logoColor=white" />
 	<img src="https://img.shields.io/badge/AWS EC2-1572B6?style=flat&logo=AWS EC2&logoColor=white" />
 </div>
+<br>
 
+# 배운 점 & 아쉬운 점
 
-프로젝트 이름
-
-
-목차
-
-프로젝트 소개
-프로젝트 개요/동기
-
-GIF Images
-
-
-기술 스택
-JavaScript	TypeScript	React	Node
-js	ts	react	node
-구현 기능
-기능 1
-기능 2
-기능 3
-기능 4
-
-배운 점 & 아쉬운 점
 
