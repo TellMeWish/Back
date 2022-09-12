@@ -8,8 +8,8 @@
 >가시화하여 목표한 버킷리스트의 달성에 대한 성취감을 높여줍니다.    
 <br>
 
-<img src="[/uploads/1848994ad25765da30fa8ef3684c67bc/캡처.PN](https://user-images.githubusercontent.com/54715532/188254972-84245590-fcf5-41d3-bce9-d032fcd5486a.png)"  width="700" height="370">
-![image](https://user-images.githubusercontent.com/54715532/189676500-abb8b862-dcc2-4e4c-8665-5ef82d042427.png)
+![image](https://user-images.githubusercontent.com/54715532/189676500-abb8b862-dcc2-4e4c-8665-5ef82d042427.png){: width="200" height="100"}
+
 
 <br>
   
