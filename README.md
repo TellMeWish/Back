@@ -1,4 +1,3 @@
-<br>
 # 버킷리스트 공유 웹 소셜 사이트
 >자신의 버킷리스트를 다른 사용자들과 공유하는 웹 소셜 네트워크 서비스입니다.<br>
 >관심사 기반으로 서로의 버킷리스트를 공유하고 모임을 형성하여 다른 사람과 함께 버킷리스트를 이룰 수 있으며,<br>
@@ -44,7 +43,9 @@
 <br>
 
 # 기술 스택  
+
 <br>
+
 ![image](https://user-images.githubusercontent.com/54715532/189676197-36d5bd3a-3675-4acd-a427-0a72b7d5eed3.png)
 <br>
 개발 언어: HTML5, CSS3, JavaScript, Java  
