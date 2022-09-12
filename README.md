@@ -54,7 +54,7 @@
 </div>
 
 
-<p align="center"><img src="https://user-images.githubusercontent.com/54715532/189676197-36d5bd3a-3675-4acd-a427-0a72b7d5eed3.png" height="600px" width="500px"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/54715532/189676197-36d5bd3a-3675-4acd-a427-0a72b7d5eed3.png" height="600px" width="600px"></p>
 
 * 개발 언어: HTML5, CSS3, JavaScript, Java  
 * 데이터베이스: MySQL  
