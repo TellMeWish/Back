@@ -43,16 +43,6 @@
 <br>
 
 # 기술 스택  
-
-<br>
-
-![image](https://user-images.githubusercontent.com/54715532/189676197-36d5bd3a-3675-4acd-a427-0a72b7d5eed3.png)
-<br>
-개발 언어: HTML5, CSS3, JavaScript, Java  
-데이터베이스: MySQL  
-적용 기술: React, Spring boot, Spring Data JPA, Axios, Spring Security  
-클라우드: AWS EC2  
-<br>
 <div align="center">
 	<img src="https://img.shields.io/badge/SpringBoot-1572B6?style=flat&logo=SpringBoot&logoColor=white" />
 	<img src="https://img.shields.io/badge/React-1572B6?style=flat&logo=React&logoColor=white" />
@@ -62,8 +52,12 @@
 	<img src="https://img.shields.io/badge/Axios-1572B6?style=flat&logo=Axios&logoColor=white" />
 	<img src="https://img.shields.io/badge/AWS EC2-1572B6?style=flat&logo=AWS EC2&logoColor=white" />
 </div>
+![image](https://user-images.githubusercontent.com/54715532/189676197-36d5bd3a-3675-4acd-a427-0a72b7d5eed3.png)
 <br>
-
-# 배운 점 & 아쉬운 점
+* 개발 언어: HTML5, CSS3, JavaScript, Java  
+* 데이터베이스: MySQL  
+* 적용 기술: React, Spring boot, Spring Data JPA, Axios, Spring Security  
+* 클라우드: AWS EC2  
+<br>
 
 
