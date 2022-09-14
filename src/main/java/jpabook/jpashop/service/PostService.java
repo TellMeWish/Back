@@ -170,7 +170,7 @@ public class PostService {
         return resPostList;
     }
 
-    public List<GetMyPostListDto.Post> getMyPostListDtoWithPhotoIdSetting(List<GetMyPostListDto.Post> postList) {
+    public List<GetMyPostListDto.Post> getMyPostListDtoWithPhotoIdSetting(List<Post> postList) {
 
         List<GetMyPostListDto.Post> resPostList = postList.stream()
                 .map(post -> modelMapper.map(post, GetMyPostListDto.Post.class))
@@ -204,7 +204,7 @@ public class PostService {
 
     }
 
-    public List<GetMyPostListDto.Post> getPostListByUserIdIncludeShare(Long id, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
+    public List<Post> getPostListByUserIdIncludeShare(Long id, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
 
         Page<Post> pagePost = postRepo.findPostByIdIncludeShare(id,
                 PageRequest.of(
@@ -221,12 +221,10 @@ public class PostService {
                                 .map(comment -> modelMapper.map(comment, GetCommentListDto.Comment.class))
                                 .collect(Collectors.toList()))*/
 
-        List<GetMyPostListDto.Post> collect = postList.stream()
-                .map(post -> modelMapper.map(post, GetMyPostListDto.Post.class))
-                .collect(Collectors.toList());
-        return collect;
-
-
+//        List<GetMyPostListDto.Post> collect = postList.stream()
+//                .map(post -> modelMapper.map(post, GetMyPostListDto.Post.class))
+//                .collect(Collectors.toList());
+        return postList;
     }
 
     public List<Post> getPostListByKeyword(String category, String keyword, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
