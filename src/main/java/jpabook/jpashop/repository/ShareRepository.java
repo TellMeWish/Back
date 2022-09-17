@@ -7,12 +7,16 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ShareRepository extends JpaRepository<Share, Long> {
     Optional<Share> findByPostAndUser(Post post, User user);
 
     Optional<Share> findByPostAndUserUserId(Post post, Long userId);
+
+    @Query("SELECT s FROM Share s WHERE s.user.userId = :userId")
+    List<Share> findAllByUserId(Long userId);
 
    /* Share findUserById(Long id);
 */

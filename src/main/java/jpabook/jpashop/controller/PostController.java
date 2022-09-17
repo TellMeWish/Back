@@ -113,12 +113,11 @@ public class PostController {
 
     @ApiOperation(value = "사용자 id별 + 사용자가 공유받은 게시글들 조회")
     @GetMapping("/myPostList/share")
-    public ResponseEntity<GetPostListDto.Response> getPostListByUserIdIncludeShare(@AuthenticationPrincipal CustomUserDetails user, @RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy) {
+    public ResponseEntity<GetMyPostListDto.Response> getPostListByUserIdIncludeShare(@AuthenticationPrincipal CustomUserDetails user, @RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size, @RequestParam Optional<String> sortBy) {
         List<Post> postList = postService.getPostListByUserIdIncludeShare(user.getId(), page, size, sortBy);
 
-        return ResponseEntity.ok().body(GetPostListDto.Response.builder()
-                .postList(postService.getPostListDtoWithPhotoIdSetting(postList))
-                .build());
+        GetMyPostListDto.Response res = postService.getMyPostListWithShareResEntity(postList, user.getId());
+        return ResponseEntity.ok().body(res);
     }
 
     @ApiOperation(value = "사용자 id별 게시글들 조회")
