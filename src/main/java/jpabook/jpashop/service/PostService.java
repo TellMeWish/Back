@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import org.springframework.util.CollectionUtils;
@@ -35,8 +36,7 @@ public class PostService {
     private final ModelMapper modelMapper;
     private final PhotoRepository photoRepo;
     private final LikesRepository likesRepo;
-
-    private final ShareRepository shareRepository;
+    private final ShareRepository shareRepo;
 
 
     @Transactional
@@ -122,12 +122,12 @@ public class PostService {
         resPost.setIsLike(likesOptional.isPresent());
         resPost.setIsMyPost(postOptional.isPresent());
 
-        Optional<Share> shareOptional = shareRepository.findByPostAndUserUserId(post, userId);
+        Optional<Share> shareOptional = shareRepo.findByPostAndUserUserId(post, userId);
 
         resPost.setIsShare(shareOptional.isPresent());
 
         if(shareOptional.isPresent()){ // 공유한 글일 경우
-            Share share = shareRepository.findByPostAndUserId(post, userId);
+            Share share = shareRepo.findByPostAndUserId(post, userId);
             resPost.setMyProgress(share.getProgress());
 
         }
@@ -189,6 +189,25 @@ public class PostService {
         return resPostList;
     }
 
+    public GetMyPostListDto.Response getMyPostListWithShareResEntity(List<Post> postList, Long id) {
+        List<Share> myShareList = shareRepo.findAllByUserId(id);
+        GetMyPostListDto.Response res = GetMyPostListDto.Response.builder()
+                .postList(getMyPostListDtoWithPhotoIdSetting(postList))
+                .build();
+
+        for (Share share : myShareList) {
+            for (GetMyPostListDto.Post post : res.getPostList()) {
+                if(post.getId().equals(share.getPost().getId())) {
+                    if(post.getIsProgress() != share.getProgress()) {
+                        post.setMyProgress(share.getProgress());
+                        System.out.println("postId " + post.getId() + " IsProgress : " + post.getIsProgress() + " -> MyProgress : " + post.getMyProgress());
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
     public List<Post> getPostListByUserId(Long id, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy) {
 
         Page<Post> pagePost = postRepo.findAllByUserId(id,
@@ -215,6 +234,8 @@ public class PostService {
         );
 
         List<Post> postList = pagePost.getContent();
+
+
 /*
         ResponseEntity.ok().body(GetCommentListDto.Response.builder()
                         .commentList(commentList.stream()
@@ -352,4 +373,6 @@ public class PostService {
     public int updateView(Long id){
         return postRepo.updateView(id);
     }
+
+
 }
