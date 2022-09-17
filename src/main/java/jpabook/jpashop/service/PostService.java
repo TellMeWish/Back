@@ -356,7 +356,7 @@ public class PostService {
     }
 
     public List<Post> getPostListByCoord(Float lat, Float lng, Optional<Integer> page, Optional<Integer> size, Optional<String> sortBy){
-        Float r = 0.9f;
+        Float r = 3.0f;
 
         Page<Post> pagePost = postRepo.findPostByCoord((double)lat, (double)lng, (double)r,
                 PageRequest.of(
