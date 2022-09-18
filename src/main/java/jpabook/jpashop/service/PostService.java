@@ -198,10 +198,8 @@ public class PostService {
         for (Share share : myShareList) {
             for (GetMyPostListDto.Post post : res.getPostList()) {
                 if(post.getId().equals(share.getPost().getId())) {
-                    if(post.getIsProgress() != share.getProgress()) {
                         post.setMyProgress(share.getProgress());
                         System.out.println("postId " + post.getId() + " IsProgress : " + post.getIsProgress() + " -> MyProgress : " + post.getMyProgress());
-                    }
                 }
             }
         }
