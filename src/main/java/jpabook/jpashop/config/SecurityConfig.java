@@ -101,9 +101,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/signup").permitAll()
                 .antMatchers("/post/postList").permitAll()
                 .antMatchers("/post/locations").permitAll()
-                .antMatchers("/photo").permitAll()
-                .antMatchers("/{id}").permitAll()
-                
+                .antMatchers("/photo/thumbnail/{id}").permitAll()
+                .antMatchers("/photo/{id}").permitAll()
 
                 .anyRequest().authenticated() //나머지 요청들은 인증해야함
 
